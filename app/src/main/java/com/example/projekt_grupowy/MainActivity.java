@@ -1,5 +1,5 @@
 package com.example.projekt_grupowy;
-// pozdrawiam wszystkie anime dziewczynki
+// pozdrawiam wszystkie anime dziewczynki!!!   s 1
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
