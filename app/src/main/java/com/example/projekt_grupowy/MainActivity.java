@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projekt_grupowy.Models.User;
@@ -28,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
     EditText _Email;
     EditText _Password;
-    Button _Button2;
-    Button _Button3;
+    TextView _Button2;
+    TextView _Button3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +41,10 @@ public class MainActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        _Email = findViewById(R.id.editTextTextEmailAddress);
-        _Password = findViewById(R.id.editTextTextPassword);
-        _Button2 = findViewById(R.id.button2);
-        _Button3 = findViewById(R.id.button3);
+        _Email = findViewById(R.id.logMail);
+        _Password = findViewById(R.id.logPassword);
+        _Button2 = findViewById(R.id.logJoinUs);
+        _Button3 = findViewById(R.id.logRemindNow);
 
         _Button3.setOnClickListener(new View.OnClickListener() {
             @Override
