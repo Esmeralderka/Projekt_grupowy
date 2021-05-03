@@ -119,13 +119,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <View
-            android:id="@+id/Vtop"
+            android:id="@+id/Vtop_4"
             android:layout_width="wrap_content"
             android:layout_height="174dp"
             android:background="#111213" />
 
         <View
-            android:id="@+id/Vtop2"
+            android:id="@+id/Vtop2_4"
             android:layout_width="wrap_content"
             android:layout_height="5dp"
             android:layout_marginTop="4dp"
@@ -165,7 +165,7 @@
         app:strokeWidth="2dp" />
 
     <EditText
-        android:id="@+id/logMail"
+        android:id="@+id/editTextTextEmailAddress"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -178,7 +178,7 @@
         app:layout_constraintTop_toTopOf="@+id/inputrec1" />
 
     <EditText
-        android:id="@+id/logPassword"
+        android:id="@+id/editTextTextPassword"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
