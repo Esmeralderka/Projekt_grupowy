@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projekt_grupowy.Models.User;
@@ -28,8 +29,9 @@ public class MainActivity extends AppCompatActivity {
 
     EditText _Email;
     EditText _Password;
-    Button _Button2;
-    //Button _Button3;
+    Button _LogIn;
+
+    TextView _SignUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,91 +44,38 @@ public class MainActivity extends AppCompatActivity {
 
         _Email = findViewById(R.id.editTextTextEmailAddress);
         _Password = findViewById(R.id.editTextTextPassword);
-        _Button2 = findViewById(R.id.logSignIn);
-        //_Button3 = findViewById(R.id.button3);
+        _LogIn = findViewById(R.id.logSignIn);
+        _SignUp = findViewById(R.id.logJoinUs);
 
-//        _Button3.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                String Email = _Email.getText().toString().trim();
-//                String Password = _Password.getText().toString().trim();
-//
-//                singUp();
-//            }
-//        });
+        _SignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Register.class);
+                startActivity(intent);
+            }
+        });
 
-        _Button2.setOnClickListener(new View.OnClickListener() {
+        _LogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String Email = _Email.getText().toString().trim();
                 String Password = _Password.getText().toString().trim();
 
-                mAuth.signInWithEmailAndPassword(Email, Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            logIn();
-                        }else {
-                            Toast.makeText(MainActivity.this, "Something went wrong (>m<) \n " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                if(Email != "" && Password != null){
+                    mAuth.signInWithEmailAndPassword(Email, Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+                                logIn();
+                            }else {
+                                Toast.makeText(MainActivity.this, "Something went wrong (>m<) \n " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
         });
-    }
-
-    private void singUp(){
-
-        String Email = _Email.getText().toString().trim();
-        String Password = _Password.getText().toString().trim();
-
-        //TODO tu dać walidacje jak będziemy wiedzieć co właściwie podajemy przy tworzeniu konta i jakie są wymogi
-        if(true) {
-
-            mAuth.createUserWithEmailAndPassword(Email, Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(MainActivity.this, "User created", Toast.LENGTH_SHORT).show();
-
-                        String userId = mAuth.getCurrentUser().getUid();
-                        DocumentReference docRef = db.collection("users").document(userId);
-
-                        User user = new User(Email);
-
-
-                        docRef.set(user).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(MainActivity.this, "Something went wrong (Firestore):c \n " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-
-                        }).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(MainActivity.this, "Login after registration (Firestore):c \n ", Toast.LENGTH_SHORT).show();
-
-                                mAuth.signInWithEmailAndPassword(Email, Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
-
-                                        if(task.isSuccessful()){
-                                            logIn();
-                                        }else {
-                                            Toast.makeText(MainActivity.this, "Something went wrong (>m<) \n " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
-                            }
-                        });
-                    } else {
-                        Toast.makeText(MainActivity.this, "Something went wrong (Auth) :c \n " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-        }
     }
 
     private void logIn(){
@@ -140,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
                 Toast.makeText(MainActivity.this, "You successfully log in (>w<)", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), Activity_base.class);
+                Intent intent = new Intent(getApplicationContext(), activity_documents.class);
                 startActivity(intent);
 
             }
