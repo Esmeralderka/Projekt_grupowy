@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -62,18 +63,34 @@ public class MainActivity extends AppCompatActivity {
                 String Email = _Email.getText().toString().trim();
                 String Password = _Password.getText().toString().trim();
 
-                if(Email != "" && Password != null){
-                    mAuth.signInWithEmailAndPassword(Email, Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()){
-                                logIn();
-                            }else {
-                                Toast.makeText(MainActivity.this, "Something went wrong (>m<) \n " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                if(Email.isEmpty()){
+                    _Email.setError("Email address is required!");
+                    _Email.requestFocus();
+                    return;
                 }
+
+                if(!Patterns.EMAIL_ADDRESS.matcher(Email).matches()){
+                    _Email.setError("Incorrect email!");
+                    _Email.requestFocus();
+                    return;
+                }
+
+                if(Password.isEmpty()){
+                    _Password.setError("Password is required!");
+                    _Password.requestFocus();
+                    return;
+                }
+
+                mAuth.signInWithEmailAndPassword(Email, Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            logIn();
+                        }else {
+                            Toast.makeText(MainActivity.this, "Something went wrong (>m<) \n " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         });
     }
@@ -83,12 +100,11 @@ public class MainActivity extends AppCompatActivity {
         String UserId = mAuth.getCurrentUser().getUid();
 
         DocumentReference DocRef = db.collection("user").document(UserId);
-
         DocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                Toast.makeText(MainActivity.this, "You successfully log in (>w<)", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "You successfully log in (OwO)", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), activity_documents.class);
                 startActivity(intent);
 
