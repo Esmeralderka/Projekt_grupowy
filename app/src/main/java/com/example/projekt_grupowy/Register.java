@@ -94,6 +94,7 @@ public class Register extends AppCompatActivity {
                     User user = new User(Email);
 
 
+
                     docRef.set(user).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {

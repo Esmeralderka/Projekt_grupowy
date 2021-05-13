@@ -108,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), activity_documents.class);
                 startActivity(intent);
 
-
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
