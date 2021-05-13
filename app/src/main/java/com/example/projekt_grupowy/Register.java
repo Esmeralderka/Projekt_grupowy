@@ -78,8 +78,6 @@ public class Register extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
     private void singUp(String Email, String Password){
