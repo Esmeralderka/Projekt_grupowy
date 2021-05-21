@@ -1,3 +1,8 @@
+/*
+
+    Klasa dokumentu
+
+ */
 package com.example.projekt_grupowy.Models;
 
 import androidx.annotation.NonNull;
@@ -44,6 +49,10 @@ public class Document {
 
     public String getUID() {
         return uid;
+    }
+
+    public String getName() {
+        return (String) getDocumentHashMap().get("name");
     }
 
     public HashMap<String, Object> getDocumentHashMap() {
