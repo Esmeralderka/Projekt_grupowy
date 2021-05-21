@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.projekt_grupowy.Models.Document;
 import com.example.projekt_grupowy.Models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -22,11 +23,18 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+
+    public static User appUser = null;
 
     EditText _Email;
     EditText _Password;
@@ -99,14 +107,77 @@ public class MainActivity extends AppCompatActivity {
 
         String UserId = mAuth.getCurrentUser().getUid();
 
-        DocumentReference DocRef = db.collection("user").document(UserId);
+        DocumentReference DocRef = db.collection("users").document(UserId);
         DocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                Toast.makeText(MainActivity.this, "You successfully log in (OwO)", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), activity_documents.class);
-                startActivity(intent);
+                appUser = new User(UserId);
+
+                appUser
+                        .getDocumentReference().get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document != null && document.exists()) {
+
+                                try {
+                                    appUser.getUserFirebase().set(document.getData());
+
+                                    appUser
+                                            .getDocumentReference().collection("documents")
+                                            .get()
+                                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                    if (task.isSuccessful()) {
+                                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                                            try {
+                                                                Map<String, Object> map = document.getData();
+
+                                                                HashMap<String, Object> hashMap =
+                                                                        (map instanceof HashMap)
+                                                                                ? (HashMap) map
+                                                                                : new HashMap<String, Object>(map);
+
+                                                                appUser.addDocument(new Document(document.getId(), hashMap));
+
+                                                                System.out.println("User document:" + document.getId());
+                                                                //Log.d(TAG, document.getId() + " => " + document.getData());
+                                                            } catch (Exception error) {
+                                                                Toast.makeText(MainActivity.this, "Something went wrong (>m<) - wrong document map? \n ", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        }
+
+
+                                                        System.out.println(appUser.toString());
+
+                                                        Toast.makeText(MainActivity.this, "You successfully log in (OwO)", Toast.LENGTH_SHORT).show();
+                                                        Intent intent = new Intent(getApplicationContext(), activity_documents.class);
+                                                        startActivity(intent);
+
+                                                    } else {
+                                                        Toast.makeText(MainActivity.this, "Something went wrong (>m<) - wrong documents \n ", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
+
+
+
+                                } catch (NullPointerException error) {
+                                    Toast.makeText(MainActivity.this, "Something went wrong (>m<) - null document field \n ", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Toast.makeText(MainActivity.this, "Something went wrong (>m<) - no document \n ", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(MainActivity.this, "Something went wrong (>m<) \n ", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+
 
             }
         }).addOnFailureListener(new OnFailureListener() {
