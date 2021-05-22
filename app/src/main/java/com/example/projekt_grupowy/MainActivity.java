@@ -114,8 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
                 appUser = new User(UserId);
 
-                appUser
-                        .getDocumentReference().get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                appUser.getDocumentReference().get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
@@ -125,8 +124,7 @@ public class MainActivity extends AppCompatActivity {
                                 try {
                                     appUser.getUserFirebase().set(document.getData());
 
-                                    appUser
-                                            .getDocumentReference().collection("documents")
+                                    appUser.getDocumentReference().collection("documents")
                                             .get()
                                             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                                 @Override
@@ -176,9 +174,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
-
-
-
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
