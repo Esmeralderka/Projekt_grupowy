@@ -50,6 +50,7 @@ public class DocumentProperties extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+
     private void initializeFieldList()
     {
         fieldNames = new ArrayList<>();
