@@ -182,4 +182,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    public static void logout(){
+        appUser = null;
+        FirebaseAuth mAuth;
+        FirebaseAuth.getInstance().signOut();
+    }
 }

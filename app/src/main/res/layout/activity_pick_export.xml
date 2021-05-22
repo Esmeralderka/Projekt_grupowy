@@ -46,7 +46,7 @@
         app:layout_constraintTop_toTopOf="@+id/linearLayout" />
 
     <ImageView
-        android:id="@+id/button_back_2"
+        android:id="@+id/Button_LogOut"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="12dp"
