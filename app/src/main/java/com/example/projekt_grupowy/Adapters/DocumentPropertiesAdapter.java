@@ -40,7 +40,7 @@ public class DocumentPropertiesAdapter extends RecyclerView.Adapter<DocumentProp
         {
             int _position = position;
 
-            holder.tv_field_name.setText(fieldNames.get(position));
+            holder.tv_field_name.setText(fieldNames.get(position) + ":");
             holder.tv_field_content.setText(fieldContent.get(position));
 
             holder.iv_delete_2.setOnClickListener(new View.OnClickListener() {

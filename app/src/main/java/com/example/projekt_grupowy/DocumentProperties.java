@@ -59,8 +59,10 @@ public class DocumentProperties extends AppCompatActivity {
         HashMap<String, Object> hashMap = document.getDocumentHashMap();
 
         for (String key : hashMap.keySet()) {
-            fieldNames.add(key);
-            fieldContent.add((String) hashMap.get(key));
+            if(!key.equals("name")){
+                fieldNames.add(key);
+                fieldContent.add((String) hashMap.get(key));
+            }
         }
     }
 }
