@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+
 
 import com.example.projekt_grupowy.Adapters.DocumentsAdapter;
 import com.example.projekt_grupowy.Models.Document;
@@ -18,6 +20,7 @@ public class activity_documents extends AppCompatActivity {
 
     RecyclerView rv;
     Button addDocumentButton;
+    ImageView ImageView_LogOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,21 @@ public class activity_documents extends AppCompatActivity {
             }
         });
         setRv();
+
+        ImageView_LogOut = (ImageView) findViewById(R.id.ImageView_LogOut);
+
+        ImageView_LogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.logout();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                // Uwaga: wyczyszczenie flag zablokuje mozliwosc powrotu do poprzedniego ekranu, ale w zamian korzystajac z przycisku
+                // powrotu wywali uzytkownika do ekranu (zminimalizuje apke)
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void navigateToAddDocument(){
