@@ -2,6 +2,7 @@ package com.example.projekt_grupowy.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,8 @@ public class DocumentsAdapter  extends RecyclerView.Adapter<DocumentsAdapter.Vie
 
     public DocumentsAdapter() {
         this.documents = MainActivity.appUser.getDocuments();
+
+        Log.d("documents adapter docs:", MainActivity.appUser.toString());
     }
 
     @NonNull

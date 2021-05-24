@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+
 import com.example.projekt_grupowy.Adapters.DocumentsAdapter;
 import com.example.projekt_grupowy.Models.Document;
 
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 public class activity_documents extends AppCompatActivity {
 
     RecyclerView rv;
+    Button addDocumentButton;
     ImageView ImageView_LogOut;
 
     @Override
@@ -26,6 +28,13 @@ public class activity_documents extends AppCompatActivity {
         setContentView(R.layout.activity_documents);
 
         rv = (RecyclerView) findViewById(R.id.documentsRV);
+        addDocumentButton = findViewById(R.id.button_addField);
+        addDocumentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToAddDocument();
+            }
+        });
         setRv();
 
         ImageView_LogOut = (ImageView) findViewById(R.id.ImageView_LogOut);
@@ -42,6 +51,11 @@ public class activity_documents extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void navigateToAddDocument(){
+        Intent intent = new Intent(getApplicationContext(), AddDocumentActivity.class);
+        startActivity(intent);
     }
 
 
