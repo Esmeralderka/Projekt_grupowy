@@ -15,6 +15,10 @@
         <activity
             android:name=".activity_documents"
             android:theme="@style/Theme.Projekt_grupowy.NoActionBar" />
+
+        <activity
+            android:name=".AddDocumentActivity"
+            android:theme="@style/Theme.Projekt_grupowy.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.Projekt_grupowy.NoActionBar">

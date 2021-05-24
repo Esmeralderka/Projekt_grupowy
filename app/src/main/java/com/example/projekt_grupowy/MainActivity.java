@@ -56,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
         _LogIn = findViewById(R.id.logSignIn);
         _SignUp = findViewById(R.id.logJoinUs);
 
+        _Email.setText("janrodo@gmail.com");
+        _Password.setText("Janrodo1!");
+
         _SignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

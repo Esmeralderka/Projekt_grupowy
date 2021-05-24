@@ -52,7 +52,7 @@ public class Document {
     }
 
     public String getName() {
-        return (String) getDocumentHashMap().get("name");
+        return (String) "" + getDocumentHashMap().get("name");
     }
 
     public HashMap<String, Object> getDocumentHashMap() {
