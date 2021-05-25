@@ -71,7 +71,14 @@ public class AddDocumentAdapter extends RecyclerView.Adapter<AddDocumentAdapter.
     public AddDocumentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.add_document_item, parent, false);
-        return new AddDocumentAdapter.ViewHolder(view);
+
+
+        ViewHolder holder = new ViewHolder(view);
+        holder.setIsRecyclable(false);
+
+
+        //return new AddDocumentAdapter.ViewHolder(view);
+        return holder;
     }
 
     @Override

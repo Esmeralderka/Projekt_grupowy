@@ -18,6 +18,9 @@ import com.example.projekt_grupowy.Models.Document;
 import com.example.projekt_grupowy.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class DocumentsAdapter  extends RecyclerView.Adapter<DocumentsAdapter.ViewHolder>{
 
@@ -26,8 +29,13 @@ public class DocumentsAdapter  extends RecyclerView.Adapter<DocumentsAdapter.Vie
     public DocumentsAdapter() {
         this.documents = MainActivity.appUser.getDocuments();
 
+        Collections.sort(documents, (Document a1, Document a2) -> a1.getName().compareTo(a2.getName()));
+
         Log.d("documents adapter docs:", MainActivity.appUser.toString());
     }
+
+
+
 
     @NonNull
     @Override
@@ -75,6 +83,8 @@ public class DocumentsAdapter  extends RecyclerView.Adapter<DocumentsAdapter.Vie
     public int getItemCount() {
         return documents.size();
     }
+
+
 
 
     public class ViewHolder extends RecyclerView.ViewHolder{

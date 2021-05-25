@@ -1,6 +1,13 @@
 package com.example.projekt_grupowy.Adapters;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,62 +19,195 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projekt_grupowy.DocumentProperties;
 import com.example.projekt_grupowy.R;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 
-public class DocumentPropertiesAdapter extends RecyclerView.Adapter<DocumentPropertiesAdapter.ViewHolder>{
+public class DocumentPropertiesAdapter extends RecyclerView.Adapter<DocumentPropertiesAdapter.ViewHolder> {
 
-    ArrayList<String> fieldNames;
-    ArrayList <String> fieldContent;
+    Context context;
+    ArrayList<Pair<String, String>> documentFields;
+    private ArrayList<Pair<TextWatcher, TextInputEditText>> TextWatcherList = new ArrayList<>();
+    AlertDialog.Builder builder;
 
-    public DocumentPropertiesAdapter(ArrayList<String> fieldNames, ArrayList<String> fieldContent) {
-        this.fieldNames = fieldNames;
-        this.fieldContent = fieldContent;
+    public DocumentPropertiesAdapter(Context context, ArrayList<Pair<String,String>> documentFields)
+    {
+        this.documentFields = documentFields;
+        this.context = context;
+        builder = new AlertDialog.Builder(context);
     }
+
+    public void setUpDialog(String title, String msg, int position)
+    {
+        builder.setTitle(title);
+        builder.setMessage(msg);
+
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                documentFields.remove(position);
+                MyNotifyDataSetChanged();
+
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+
 
     @NonNull
     @Override
     public DocumentPropertiesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.item_rv_doc_prop, parent, false);
+        View view = inflater.inflate(R.layout.add_document_item, parent, false);
 
-        return new DocumentPropertiesAdapter.ViewHolder(view);
+        ViewHolder holder = new ViewHolder(view);
+        holder.setIsRecyclable(false);
+
+
+        Log.d("wykonuje sie oncreate", "wykonuje sie oncreate");
+        return holder;
+        //return new DocumentPropertiesAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull DocumentPropertiesAdapter.ViewHolder holder, int position) {
-        if(fieldNames.get(position) != null )
-        {
-            int _position = position;
+        if (documentFields.get(position) != null) {
+            //Pair<String, String> item = documentFields.get(position);
 
-            holder.tv_field_name.setText(fieldNames.get(position) + ":");
-            holder.tv_field_content.setText(fieldContent.get(position));
 
-            holder.iv_delete_2.setOnClickListener(new View.OnClickListener() {
+            TextWatcher TextWatcherNames;
+            TextWatcher TextWatcherValues;
+
+            holder.fieldName.setText(documentFields.get(position).first);
+            holder.fieldValue.setText(documentFields.get(position).second);
+
+
+
+            holder.deleteField.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO
+                    Log.d("usuwanie pola na pozycji " , Integer.toString(position));
+                    //documentFields.add(new Pair("", ""));
+                    setUpDialog("Warning", "Are you sure about deleting this field? \n" +
+                            "Field type: " + documentFields.get(position).first,position);
                 }
             });
+
+
+            //holder.fieldName.addTextChangedListener(new TextWatcher() {
+            TextWatcherNames = (new TextWatcher() {
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    // TODO Auto-generated method stub
+
+                }
+
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    // TODO Auto-generated method stub
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    documentFields.set(position, new Pair(s.toString(), documentFields.get(position).second));
+
+                    Log.d("para w listenerze: dla pozycji = ", Integer.toString(position) + " " +s.toString() + " " + documentFields.get(position).second);
+                }
+            });
+
+            //holder.fieldValue.addTextChangedListener(new TextWatcher() {
+            TextWatcherValues = (new TextWatcher() {
+                @Override
+                public void afterTextChanged(Editable s) {
+                    // TODO Auto-generated method stub
+
+                }
+
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    // TODO Auto-generated method stub
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    documentFields.set(position, new Pair(documentFields.get(position).first, s.toString()));
+
+                    Log.d("para w listenerze: dla pozycji = ",Integer.toString(position) +" "+ documentFields.get(position).first + " " + s.toString());
+                }
+            });
+
+
+
+            setListener(TextWatcherNames,holder.fieldName);
+            setListener(TextWatcherValues,holder.fieldValue);
         }
     }
 
+    void MyNotifyDataSetChanged()
+    {
+        removeListeners();
+        notifyDataSetChanged();
+    }
+
+    private void setListener(TextWatcher listener, TextInputEditText editText) {
+        editText.addTextChangedListener(listener);
+        TextWatcherList.add(new Pair(listener,editText));
+    }
+
+    private void removeListeners() {
+        for (Pair<TextWatcher,TextInputEditText> t : TextWatcherList)
+            t.second.removeTextChangedListener(t.first);
+
+        TextWatcherList.clear();
+    }
+
+
+
     @Override
-    public int getItemCount() { return fieldNames.size(); }
+    public int getItemCount() {
+        return documentFields.size();
+    }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public ArrayList<Pair<String, String>> getDocumentFields() {
+        return documentFields;
+    }
 
-        TextView tv_field_name;
-        TextView tv_field_content;
-        ImageView iv_delete_2;
+    public void addNewField() {
+        documentFields.add(new Pair("", ""));
+
+        MyNotifyDataSetChanged();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        TextInputEditText fieldName;
+        TextInputEditText fieldValue;
+        ImageView deleteField;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tv_field_name = (TextView) itemView.findViewById(R.id.tv_field_name);
-            tv_field_content = (TextView) itemView.findViewById(R.id.tv_field_content);
-            iv_delete_2 = (ImageView) itemView.findViewById(R.id.iv_delete_2);
+            fieldName = (TextInputEditText) itemView.findViewById(R.id.fieldName);
+            fieldValue = (TextInputEditText) itemView.findViewById(R.id.fieldValue);
+            deleteField = (ImageView) itemView.findViewById(R.id.deleteField);
         }
     }
+
 
 }
