@@ -53,6 +53,12 @@ public class activity_documents extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setRv();
+    }
+
     private void navigateToAddDocument(){
         Intent intent = new Intent(getApplicationContext(), AddDocumentActivity.class);
         startActivity(intent);

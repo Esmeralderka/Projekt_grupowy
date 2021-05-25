@@ -53,6 +53,10 @@ public class User {
         return documents;
     }
 
+    public void setDocument(Document document,int position) {documents.set(position,document);}
+
+    public Document getDocument(int position) {return documents.get(position);}
+
     public void setDocuments(ArrayList<Document> documents) {
         this.documents = documents;
     }
