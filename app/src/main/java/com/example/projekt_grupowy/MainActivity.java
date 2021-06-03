@@ -12,6 +12,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.projekt_grupowy.Formats.BibTeX_Article;
+import com.example.projekt_grupowy.Formats.BibTeX_Book;
+import com.example.projekt_grupowy.Formats.EndNote_Generic;
 import com.example.projekt_grupowy.Models.Document;
 import com.example.projekt_grupowy.Models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,7 +49,57 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        //witam wszystkich bardzo serdecznie ;3
+
+        // test format
+        System.out.println();
+            //
+            BibTeX_Article newArticle = new BibTeX_Article();
+
+            newArticle.setDocumentName("dokumencik");
+
+            newArticle.setField("author", "Jan Matejko");
+            newArticle.setField("title", "Kosmiczne przygody");
+            newArticle.setField("journal", "Odkrywca");
+            newArticle.setField("year", "1887");
+
+            newArticle.setField("pages", "54");
+            newArticle.setField("month", "04");
+            newArticle.setField("note", "super sie czyta UwU");
+
+            System.out.println(newArticle.getFormat());
+
+
+            //
+            BibTeX_Book newBook = new BibTeX_Book();
+
+            newBook.setDocumentName("eksplozje");
+
+            newBook.setField("author", "Megumin");
+            newBook.setField("title", "Explosion!");
+            newBook.setField("publisher", "Szymek");
+            newBook.setField("year", "2021");
+
+            newBook.setField("edition", "Dynamite");
+            newBook.setField("note", "EXPLOSIOOON!!!");
+
+            System.out.println(newBook.getFormat());
+
+            //
+            EndNote_Generic newBookEN = new EndNote_Generic();
+
+            //newBookEN.setDocumentName("eksplozje");
+
+            newBookEN.setField("Author", "Megumin");
+            newBookEN.setField("Title", "Explosion!");
+            newBookEN.setField("Publisher", "Szymek");
+            newBookEN.setField("Year", "2021");
+
+            newBookEN.setField("Edition", "Dynamite");
+            newBookEN.setField("Notes", "EXPLOSIOOON!!!");
+
+            System.out.println(newBookEN.getFormat());
+        //
+
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -56,8 +109,8 @@ public class MainActivity extends AppCompatActivity {
         _LogIn = findViewById(R.id.logSignIn);
         _SignUp = findViewById(R.id.logJoinUs);
 
-        _Email.setText("janrodo@gmail.com");
-        _Password.setText("Janrodo1!");
+        //_Email.setText("janrodo@gmail.com");
+        //_Password.setText("Janrodo1!");
 
         _SignUp.setOnClickListener(new View.OnClickListener() {
             @Override
