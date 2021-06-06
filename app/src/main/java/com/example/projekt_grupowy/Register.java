@@ -19,10 +19,13 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -90,12 +93,14 @@ public class Register extends AppCompatActivity {
 
                     String userId = mAuth.getCurrentUser().getUid();
                     DocumentReference docRef = db.collection("users").document(userId);
-
+                    CollectionReference collection = db.collection("users").document(userId).collection("documents");
+                    Map<String, Object> userr= new HashMap<>();
+                    userr.put("email", Email);
                     User user = new User(Email);
 
 
 
-                    docRef.set(user).addOnFailureListener(new OnFailureListener() {
+                    docRef.set(userr).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(Register.this, "Something went wrong (Firestore):c \n " + e.getMessage(), Toast.LENGTH_SHORT).show();
