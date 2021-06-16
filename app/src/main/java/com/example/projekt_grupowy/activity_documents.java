@@ -66,7 +66,7 @@ public class activity_documents extends AppCompatActivity {
 
 
     private void setRv(){
-        DocumentsAdapter adapter = new DocumentsAdapter();
+        DocumentsAdapter adapter = new DocumentsAdapter(this);
         rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rv.setAdapter(adapter);
     }

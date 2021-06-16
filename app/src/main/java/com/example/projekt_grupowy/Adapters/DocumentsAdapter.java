@@ -1,8 +1,11 @@
 package com.example.projekt_grupowy.Adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,10 @@ import com.example.projekt_grupowy.DocumentProperties;
 import com.example.projekt_grupowy.MainActivity;
 import com.example.projekt_grupowy.Models.Document;
 import com.example.projekt_grupowy.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,18 +31,22 @@ import java.util.Comparator;
 
 public class DocumentsAdapter  extends RecyclerView.Adapter<DocumentsAdapter.ViewHolder>{
 
+    private static final String TAG = "DocumentsAdapter";
     ArrayList<Document> documents;
 
-    public DocumentsAdapter() {
-        this.documents = MainActivity.appUser.getDocuments();
+    Context context;
+    AlertDialog.Builder builder;
 
+
+    public DocumentsAdapter(Context context) {
+        this.documents = MainActivity.appUser.getDocuments();
         Collections.sort(documents, (Document a1, Document a2) -> a1.getName().compareTo(a2.getName()));
+
+        this.context = context;
+        builder = new AlertDialog.Builder(context);
 
         Log.d("documents adapter docs:", MainActivity.appUser.toString());
     }
-
-
-
 
     @NonNull
     @Override
@@ -72,10 +83,10 @@ public class DocumentsAdapter  extends RecyclerView.Adapter<DocumentsAdapter.Vie
             holder.iv_delete_2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO
+                    setUpDialog("Warning", "Are you sure about deleting this document? \n" +
+                             "Document name:" + documents.get(_position).getName(), _position);
                 }
             });
-
         }
     }
 
@@ -83,9 +94,6 @@ public class DocumentsAdapter  extends RecyclerView.Adapter<DocumentsAdapter.Vie
     public int getItemCount() {
         return documents.size();
     }
-
-
-
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -102,5 +110,52 @@ public class DocumentsAdapter  extends RecyclerView.Adapter<DocumentsAdapter.Vie
         }
     }
 
+    private void deleteDocument(int docPosition){
 
+        FirebaseFirestore db;
+        db = FirebaseFirestore.getInstance();
+        CollectionReference ColRef = db.collection("users").document(MainActivity.appUser.getUID()).collection("documents");
+
+        ColRef.document(documents.get(docPosition).getUID()).delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                        documents.remove(docPosition);
+                        notifyDataSetChanged();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
+    }
+
+    public void setUpDialog(String title, String msg, int _position)
+    {
+        builder.setTitle(title);
+        builder.setMessage(msg);
+
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                deleteDocument(_position);
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 }
