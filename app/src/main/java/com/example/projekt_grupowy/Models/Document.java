@@ -5,12 +5,15 @@
  */
 package com.example.projekt_grupowy.Models;
 
+import android.widget.ArrayAdapter;
+
 import androidx.annotation.NonNull;
 
 import com.example.projekt_grupowy.MainActivity;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Document {
@@ -73,5 +76,14 @@ public class Document {
         }
 
         return str;
+    }
+
+    public ArrayList<String> _getAllFieldsNames(){
+
+        ArrayList <String> arrayList = new ArrayList<>();
+        for (String key : getDocumentHashMap().keySet()) {
+            arrayList.add(key);
+        }
+        return arrayList;
     }
 }

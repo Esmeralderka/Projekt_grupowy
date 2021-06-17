@@ -10,7 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Projekt_grupowy.NoActionBar">
         <activity android:name=".DocumentProperties" />
-        <activity android:name=".Export" />
+        <activity android:name=".DocumentExport" />
+        <activity android:name=".DocumentExportPick" />
         <activity
             android:name=".activity_documents"
             android:theme="@style/Theme.Projekt_grupowy.NoActionBar" />
@@ -29,7 +30,6 @@
         </activity>
         <activity android:name=".Activity_base" />
         <activity android:name=".Register" />
-
     </application>
 
 </manifest>

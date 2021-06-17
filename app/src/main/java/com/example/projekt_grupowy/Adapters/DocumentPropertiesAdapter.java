@@ -208,6 +208,4 @@ public class DocumentPropertiesAdapter extends RecyclerView.Adapter<DocumentProp
             deleteField = (ImageView) itemView.findViewById(R.id.deleteField);
         }
     }
-
-
 }

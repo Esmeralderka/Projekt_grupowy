@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.projekt_grupowy.DocumentExportPick;
 import com.example.projekt_grupowy.DocumentProperties;
 import com.example.projekt_grupowy.MainActivity;
 import com.example.projekt_grupowy.Models.Document;
@@ -25,9 +25,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 
 public class DocumentsAdapter  extends RecyclerView.Adapter<DocumentsAdapter.ViewHolder>{
 
@@ -76,7 +74,9 @@ public class DocumentsAdapter  extends RecyclerView.Adapter<DocumentsAdapter.Vie
             holder.iv_export.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO
+                    DocumentExportPick.documentPositionInUserDocumentsArrayList = _position;
+                    Intent intent =  new Intent(v.getContext(), DocumentExportPick.class);
+                    v.getContext().startActivity(intent);
                 }
             });
 
@@ -84,7 +84,7 @@ public class DocumentsAdapter  extends RecyclerView.Adapter<DocumentsAdapter.Vie
                 @Override
                 public void onClick(View v) {
                     setUpDialog("Warning", "Are you sure about deleting this document? \n" +
-                             "Document name:" + documents.get(_position).getName(), _position);
+                             "Document name: " + documents.get(_position).getName(), _position);
                 }
             });
         }

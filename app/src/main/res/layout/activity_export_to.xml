@@ -32,14 +32,13 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/Button_LogOut"
+        android:id="@+id/BBack"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logout_image"
         tools:srcCompat="@drawable/back" />
 
     <ImageView
@@ -55,13 +54,14 @@
     <TextView
         android:id="@+id/tv_docType"
         style="@style/documents"
-        android:layout_width="127dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:fontFamily="@font/montserrat_semibold"
         android:text="xxxxxxxxx"
         android:textColor="#C7C7C7"
         android:textSize="24sp"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/linearLayout"
         app:layout_constraintTop_toTopOf="parent" />
@@ -95,30 +95,67 @@
         app:layout_constraintStart_toStartOf="@+id/linearLayout"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="375dp"
-        android:layout_height="559dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="1dp"
-        android:background="#2C2F33"
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="240dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_docName" />
+        app:layout_constraintTop_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            >
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/RVExport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="1dp"
+                android:background="#2C2F33" />
+
+            <Button
+                android:id="@+id/BExport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="30dp"
+                android:fontFamily="@font/montserrat_semibold"
+                android:text="Export"
+                android:textColorHighlight="#FFFFFF"
+                android:textColorHint="#C7C7C7"
+                android:textColorLink="#00FF0000"
+                android:textSize="26dp"
+                android:layout_gravity="center"
+                app:backgroundTint="#2C2F33"
+                app:cornerRadius="10dp"
+                app:rippleColor="#C7C7C7"
+                app:strokeColor="#C7C7C7"
+                app:strokeWidth="2dp" />
+        </LinearLayout>
+    </ScrollView>
 
     <TextView
         android:id="@+id/tv_docName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:fontFamily="@font/montserrat_semibold"
         android:text="*DOCUMENT NAME*"
         android:textColor="#FFFFFF"
         android:textSize="30dp"
-        app:layout_constraintEnd_toEndOf="@+id/recyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="@+id/recyclerView"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

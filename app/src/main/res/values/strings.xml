@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">Projekt_grupowy</string>
+
+    <string-array name="formats">
+
+        <item>BibTeX_Article</item>
+        <item>BibTeX_Book</item>
+        <item>BibTeX_Booklet</item>
+        <item>BibTeX_Conference</item>
+        <item>BibTeX_Inbook</item>
+        <item>BibTeX_Incollection</item>
+        <item>BibTeX_Inproceedings</item>
+        <item>BibTeX_Manual</item>
+        <item>BibTeX_Mastersthesis</item>
+        <item>BibTeX_Misc</item>
+        <item>BibTeX_Phdthesis</item>
+        <item>BibTeX_Proceedings</item>
+        <item>BibTeX_Techreport</item>
+        <item>BibTeX_Unpublished</item>
+
+        <item>EndNote_Generic</item>
+
+        <item>RIS_Generic</item>
+    </string-array>
 </resources>

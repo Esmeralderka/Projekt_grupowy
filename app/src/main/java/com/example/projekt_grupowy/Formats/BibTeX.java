@@ -16,7 +16,6 @@ public abstract class BibTeX extends Format {
         output += "@" + this.fileType + "{" + documentName;
 
         for (String key : getKeys()) {
-
             if (!formatFields.get(key).equals("")) {
                 output += ",\n\t" + key + " = \"" + formatFields.get(key) + "\"";
             }
