@@ -143,6 +143,7 @@ public class activity_documents extends AppCompatActivity {
                             String type = split[0];
                             id = split[1];
                             Uri contenturi = null;
+                            int i = 10;
                             if (type.equals("image")){
                                 contenturi = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
                             }else if (type.equals("video")){
