@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.example.projekt_grupowy.Adapters.DocumentsAdapter;
 import com.example.projekt_grupowy.Models.Document;
+import com.example.projekt_grupowy.Models.Import;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -83,17 +84,18 @@ public class activity_documents extends AppCompatActivity {
                 gallery.setType("*/*");
                 gallery.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(gallery, "Select document"),1);
-                // Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
                 // Uwaga: wyczyszczenie flag zablokuje mozliwosc powrotu do poprzedniego ekranu, ale w zamian korzystajac z przycisku
                 // powrotu wywali uzytkownika do ekranu (zminimalizuje apke)
                 // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-               // startActivity(intent);
+                //startActivity(intent);
             }
         });
     }
 
     @Override
-    protected void onResume() {
+    protected void onResume()
+    {
         super.onResume();
         setRv();
     }
@@ -147,6 +149,9 @@ public class activity_documents extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         System.out.println(" XxXxXxXxXxX@@@@@@@@@@@@@@@@@@@XxXxXxXxXxX" + buf.toString());
+
+                        Intent intent = new Intent(getApplicationContext(), Import.class);
+                        startActivity(intent);
                     }
                 }
         }
