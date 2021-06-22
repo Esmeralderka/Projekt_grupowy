@@ -1,5 +1,15 @@
 package com.example.projekt_grupowy;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -7,44 +17,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.ContentUris;
-import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Environment;
-import android.provider.ContactsContract;
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
-import android.text.SpannableString;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-
 import com.example.projekt_grupowy.Adapters.DocumentsAdapter;
 import com.example.projekt_grupowy.Models.Document;
 import com.example.projekt_grupowy.Models.Import;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
-
-import org.xml.sax.SAXException;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,16 +43,23 @@ public class activity_documents extends AppCompatActivity {
     Button importFileButton;
     ImageView ImageView_LogOut;
     Intent myFileIntent;
-    TextView tx;
     DocumentBuilder builder;
+    ImageView refresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_documents);
         rv = (RecyclerView) findViewById(R.id.documentsRV);
-        tx =  findViewById(R.id.textView8);
         addDocumentButton = findViewById(R.id.button_addField);
+        refresh = findViewById(R.id.button_refresh_4);
+
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // REFRESH
+            }
+        });
 
         addDocumentButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,7 +129,6 @@ public class activity_documents extends AppCompatActivity {
             case 1:
                 if(resultCode==RESULT_OK) {
                     String patch = data.getData().getPath();
-                    tx.setText(patch);
                     System.out.println(data.getData());
                     System.out.println("getAuthority" + data.getData().getAuthority());
 
@@ -190,7 +181,6 @@ public class activity_documents extends AppCompatActivity {
 
 
                             String ss2 = s.substring(start+1, end);//zeby nie bylo {
-                            txt_line.put("name", ss2);
 
                             System.out.println("UWAGA WYPISUJE SOBIE TYTUL "+ ss2);
 
@@ -268,19 +258,26 @@ public class activity_documents extends AppCompatActivity {
                                     content = line.get(i).substring(start, end);
 
                                     System.out.println("KONTENT "+ content);
-                                txt_line.put(key,content);
+                                txt_line.put(key.trim(),content);
                             }
-
+                            txt_line.put("name", ss2.trim());
+                            for (Map.Entry<String, Object> entry : txt_line.entrySet()) {
+                                String keyz = entry.getKey();
+                                Object value = entry.getValue();
+                                System.out.println("keyz: "+keyz);
+                                System.out.println("value: "+value);
+                            }
                         }
 
                     }
-
-
                     Document document = new Document();
                     document.setDocumentHashMap(txt_line);
-                    DocumentReference documentReference;//new DocumentReference();
-                    documentReference = document.getDocumentReference();
-                    documentReference.set(txt_line).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    FirebaseFirestore.getInstance()
+                            .collection("users")
+                            .document(MainActivity.appUser.getUID())
+                            .collection("documents")
+                            .document().set(txt_line)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
                             System.out.println("UDALO SIEE");
@@ -288,39 +285,10 @@ public class activity_documents extends AppCompatActivity {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-
                             System.out.println("NIEEEE " + e.toString());
-
                         }
                     });
-                       // Map<String, Object> doc = new HashMap<>();
-                        //w petli value, ktore bedzie z parsowanego pliku bibtex
-
-
-                        //
-                        //doc.put();
-
-                        //wszystkie parsowane rzeczy dodac do hash mapy (string)
-                       //tutaj ta hashmapa);
-
-                      /*  Intent intent = new Intent(getApplicationContext(), Import.class);
-                        startActivity(intent);*/
                     }
                 }
-        }
-    //}
-    public String getColunmData( Uri uri, String selection, String[] selectarg){
-        String filepath ="";
-        Cursor cursor = null;
-        String colunm = "_data";
-        String[] projection = {colunm};
-        cursor =  getContentResolver().query( uri, projection, selection, selectarg, null);
-        if (cursor!= null){
-            cursor.moveToFirst();
-            filepath = cursor.getString(cursor.getColumnIndex(colunm));
-        }
-        if (cursor!= null)
-            cursor.close();
-        return  filepath;
     }
 }
