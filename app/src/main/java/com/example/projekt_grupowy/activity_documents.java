@@ -1,5 +1,6 @@
 package com.example.projekt_grupowy;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,9 @@ import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,14 +31,22 @@ import com.example.projekt_grupowy.Adapters.DocumentsAdapter;
 import com.example.projekt_grupowy.Models.Document;
 import com.example.projekt_grupowy.Models.Import;
 
+import org.xml.sax.SAXException;
+
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.xml.parsers.DocumentBuilder;
 
 public class activity_documents extends AppCompatActivity {
 
@@ -44,6 +56,7 @@ public class activity_documents extends AppCompatActivity {
     ImageView ImageView_LogOut;
     Intent myFileIntent;
     TextView tx;
+    DocumentBuilder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,6 +151,7 @@ public class activity_documents extends AppCompatActivity {
                     if (inputStream!=null){
                         try {
                             while((str = reader.readLine())!=null){
+
                                 buf.append(str+"\n");
                             }
                         } catch (IOException e) {
@@ -150,12 +164,129 @@ public class activity_documents extends AppCompatActivity {
                         }
                         System.out.println(" XxXxXxXxXxX@@@@@@@@@@@@@@@@@@@XxXxXxXxXxX" + buf.toString());
 
-                        Intent intent = new Intent(getApplicationContext(), Import.class);
-                        startActivity(intent);
+                      //  String s = buf.toString();
+
+                    /**TUTAJ*/
+
+                        if(true) {
+
+                            String s = buf.toString();
+
+                            int start = 0;
+                            int end = 0;
+
+
+                            start = s.indexOf("{", start);
+
+                           // if (start == -1) break;
+                            end = s.indexOf(",", start);
+                            int end22 = s.indexOf(" ", start);
+
+                            if (end == -1) end = end22;
+                            if (end == -1 && end22 == -1) end = s.length();
+
+
+                            String ss2 = s.substring(start+1, end);//zeby nie bylo {
+
+                            System.out.println("UWAGA WYPISUJE SOBIE TYTUL "+ ss2);
+
+                         //   start = end + 1;
+
+                            ArrayList<String>line = new ArrayList<>();
+                            for ( int i = 0; i < s.length(); ++i) {
+
+                                start = s.indexOf("\n", start);
+
+                                if (start == -1) break;
+                                end = s.indexOf("\n", start+1);
+                                //int end2 = s.indexOf("}", start+1);
+
+                               /* if (end == -1) end = end2;*/
+                                if (end == -1 ) end = s.length();
+
+
+                                String ss = s.substring(start, end);
+                                line.add(ss);
+                                System.out.println("UWAGA WYPISUJE SOBIE COS "+i+ ss);
+
+                                start = end ;
+
+                            }
+
+
+                            for(int i=0; i<line.size()-2;i++)
+                            {
+                                start = 0;
+                                end = 0;
+
+                                    String key, content;
+
+                                   // start=0;
+                                    end = line.get(i).indexOf("=", start+1);
+                                    int end2 = line.get(i).indexOf(" ", start+1);
+
+                                    if (end == -1) end = end2;
+                                    if (end == -1 && end2==-1 ) end = line.get(i).length();
+
+                                    key=line.get(i).substring(1, end);
+                                    System.out.println("KLUUUCZ "+key);
+
+
+                                    start = line.get(i).indexOf("=", start+1);
+                                    switch(line.get(i).charAt(start+2)){
+                                        case '\"' :
+                                            start += 3;
+                                            end = line.get(i).indexOf('\"', start);
+                                            break;
+                                        case '{' :
+
+                                            start+=3;
+                                            end = line.get(i).indexOf('}', start);
+
+                                            break;
+                                        default:
+                                            start+=2;
+                                            end = line.get(i).length();
+                                            if(line.get(i).charAt(end-1)==',')
+                                            {
+                                                end-=1;
+                                            }
+
+                                            break;
+
+                                        }
+                                    if (start == -1) break;
+
+                                    if (end == -1 ) end = line.get(i).length();
+
+
+                                    content = line.get(i).substring(start, end);
+
+                                    System.out.println("KONTENT "+ content);
+                            }
+
+                        }
+
+                    }
+
+
+                        Document document = new Document();
+                        Map<String, Object> doc = new HashMap<>();
+                        //w petli value, ktore bedzie z parsowanego pliku bibtex
+
+
+                        //
+                        //doc.put();
+
+                        //wszystkie parsowane rzeczy dodac do hash mapy (string)
+                       // document.setDocumentHashMap(//tutaj ta hashmapa);
+
+                      /*  Intent intent = new Intent(getApplicationContext(), Import.class);
+                        startActivity(intent);*/
                     }
                 }
         }
-    }
+    //}
     public String getColunmData( Uri uri, String selection, String[] selectarg){
         String filepath ="";
         Cursor cursor = null;
