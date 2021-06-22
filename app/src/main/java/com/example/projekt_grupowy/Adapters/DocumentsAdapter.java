@@ -34,7 +34,6 @@ public class DocumentsAdapter  extends RecyclerView.Adapter<DocumentsAdapter.Vie
     private static final String TAG = "DocumentsAdapter";
     ArrayList<Document> documents;
     ArrayList<Document> filteredDocuments;
-
     Context context;
     AlertDialog.Builder builder;
 
@@ -63,20 +62,36 @@ public class DocumentsAdapter  extends RecyclerView.Adapter<DocumentsAdapter.Vie
         {
             int _position = position;
 
+
             holder.tv_Title.setText(documents.get(position).getName());
             holder.tv_Title.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    DocumentProperties.documentPositionInUserDocumentsArrayList = _position;
+                    int aa=0;
+                    for(int i=0;i<filteredDocuments.size();i++){
+                        if(documents.get(_position).getName().equals(filteredDocuments.get(i).getName())){
+                            System.out.println("ZGADZA SIE");
+                            aa=i;
+                        }
+                    }
+                    DocumentProperties.documentPositionInUserDocumentsArrayList = aa;
                     Intent intent =  new Intent(v.getContext(), DocumentProperties.class);
                     v.getContext().startActivity(intent);
+
                 }
             });
 
             holder.iv_export.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    DocumentExportPick.documentPositionInUserDocumentsArrayList = _position;
+                    int aa=0;
+                    for(int i=0;i<filteredDocuments.size();i++){
+                        if(documents.get(_position).getName().equals(filteredDocuments.get(i).getName())){
+                            System.out.println("ZGADZA SIE");
+                            aa=i;
+                        }
+                    }
+                    DocumentExportPick.documentPositionInUserDocumentsArrayList = aa;
                     Intent intent =  new Intent(v.getContext(), DocumentExportPick.class);
                     v.getContext().startActivity(intent);
                 }
