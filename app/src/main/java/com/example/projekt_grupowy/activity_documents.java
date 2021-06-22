@@ -30,6 +30,9 @@ import android.widget.TextView;
 import com.example.projekt_grupowy.Adapters.DocumentsAdapter;
 import com.example.projekt_grupowy.Models.Document;
 import com.example.projekt_grupowy.Models.Import;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 
 import org.xml.sax.SAXException;
 
@@ -128,7 +131,7 @@ public class activity_documents extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        HashMap<String, Object> txt_line = new HashMap<>();
         switch(requestCode)
         {
             case 1:
@@ -187,6 +190,7 @@ public class activity_documents extends AppCompatActivity {
 
 
                             String ss2 = s.substring(start+1, end);//zeby nie bylo {
+                            txt_line.put("name", ss2);
 
                             System.out.println("UWAGA WYPISUJE SOBIE TYTUL "+ ss2);
 
@@ -232,6 +236,7 @@ public class activity_documents extends AppCompatActivity {
                                     System.out.println("KLUUUCZ "+key);
 
 
+
                                     start = line.get(i).indexOf("=", start+1);
                                     switch(line.get(i).charAt(start+2)){
                                         case '\"' :
@@ -263,6 +268,7 @@ public class activity_documents extends AppCompatActivity {
                                     content = line.get(i).substring(start, end);
 
                                     System.out.println("KONTENT "+ content);
+                                txt_line.put(key,content);
                             }
 
                         }
@@ -270,8 +276,24 @@ public class activity_documents extends AppCompatActivity {
                     }
 
 
-                        Document document = new Document();
-                        Map<String, Object> doc = new HashMap<>();
+                    Document document = new Document();
+                    document.setDocumentHashMap(txt_line);
+                    DocumentReference documentReference;//new DocumentReference();
+                    documentReference = document.getDocumentReference();
+                    documentReference.set(txt_line).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            System.out.println("UDALO SIEE");
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                            System.out.println("NIEEEE " + e.toString());
+
+                        }
+                    });
+                       // Map<String, Object> doc = new HashMap<>();
                         //w petli value, ktore bedzie z parsowanego pliku bibtex
 
 
@@ -279,7 +301,7 @@ public class activity_documents extends AppCompatActivity {
                         //doc.put();
 
                         //wszystkie parsowane rzeczy dodac do hash mapy (string)
-                       // document.setDocumentHashMap(//tutaj ta hashmapa);
+                       //tutaj ta hashmapa);
 
                       /*  Intent intent = new Intent(getApplicationContext(), Import.class);
                         startActivity(intent);*/
