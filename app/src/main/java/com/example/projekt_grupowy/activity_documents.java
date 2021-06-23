@@ -69,11 +69,12 @@ public class activity_documents extends AppCompatActivity {
             public void onClick(View v) {
                 // REFRESH
 
-
+              //  documents.get(docPosition).getUID())
 
                 rv.removeAllViews();
-                adapter.notifyDataSetChanged();
+
                 setRv();
+                adapter.notifyDataSetChanged();
                // MainActivity.appUser.addDocument(newDocument);
 //                doc_activ.setRecyclerView();
               //  adapter.onBindViewHolder();
@@ -325,7 +326,11 @@ public class activity_documents extends AppCompatActivity {
 
                     }
                     Document document = new Document();
+                    UUID uuid = UUID.randomUUID();
+                    String uuidAsString = uuid.toString();
                     document.setDocumentHashMap(txt_line);
+                    document.setUID(uuidAsString);
+
                     FirebaseFirestore.getInstance()
                             .collection("users")
                             .document(MainActivity.appUser.getUID())
@@ -337,7 +342,7 @@ public class activity_documents extends AppCompatActivity {
                          //   rv.se
                             MainActivity.appUser.addDocument(document);
 
-                          //  setRv();
+                            //setRv();
                             System.out.println("UDALO SIEE");
                         }
                     }).addOnFailureListener(new OnFailureListener() {
