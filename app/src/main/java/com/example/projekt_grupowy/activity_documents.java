@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.projekt_grupowy.Adapters.AddDocumentAdapter;
 import com.example.projekt_grupowy.Adapters.DocumentsAdapter;
 import com.example.projekt_grupowy.Models.Document;
 import com.example.projekt_grupowy.Models.Import;
@@ -33,6 +35,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.xml.parsers.DocumentBuilder;
 
@@ -46,18 +49,68 @@ public class activity_documents extends AppCompatActivity {
     DocumentBuilder builder;
     ImageView refresh;
 
+    AddDocumentActivity doc_activ;
+    AddDocumentAdapter adapter2;
+    DocumentsAdapter adapter ;//= new DocumentsAdapter(this);
+    ArrayList<Document> documents;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_documents);
         rv = (RecyclerView) findViewById(R.id.documentsRV);
         addDocumentButton = findViewById(R.id.button_addField);
+
+
         refresh = findViewById(R.id.button_refresh_4);
 
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // REFRESH
+
+
+
+                rv.removeAllViews();
+                adapter.notifyDataSetChanged();
+                setRv();
+               // MainActivity.appUser.addDocument(newDocument);
+//                doc_activ.setRecyclerView();
+              //  adapter.onBindViewHolder();
+                /*adapter2 = new AddDocumentAdapter(v.getContext());
+                adapter2.initializeArray();
+                rv = findViewById(R.id.documentsRV);
+                rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                rv.setAdapter(adapter2);*/
+
+              /*  rv.removeAllViews();
+                adapter.notifyItemInserted(8);*/
+            //    navigate();
+                //System.out.println(rv.getI);
+               /* adapter = new DocumentsAdapter(v.getContext());
+                rv.invalidate();
+
+                setRv();
+                System.out.println("HALO DO CHOLERY DZIEJE SIE COS??");
+                adapter.notifyDataSetChanged();*/
+                //doc_activ.set
+
+                /*adapter = new AddDocumentAdapter(v.getContext());
+                adapter.initializeArray();
+                rv = findViewById(R.id.documentsRV);
+                rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                rv.setAdapter(adapter);*/
+
+
+                //AddDocumentAdapter addDocumentAdapter = new AddDocumentAdapter(v.getContext());
+               // addDocumentAdapter.onCreateViewHolder();
+
+               /* Intent i = new Intent(getApplicationContext(), activity_documents.class);
+                startActivity(i);*/
+             /* DocumentsAdapter adapter = new DocumentsAdapter(v.getContext());
+                rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                rv.setAdapter(adapter);*/
+
             }
         });
 
@@ -114,9 +167,10 @@ public class activity_documents extends AppCompatActivity {
     }
 
     private void setRv(){
-        DocumentsAdapter adapter = new DocumentsAdapter(this);
+        adapter = new DocumentsAdapter(this);
         rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rv.setAdapter(adapter);
+        System.out.println("HALO WYWOLUJE SIE TO KIEDY??");
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
@@ -280,6 +334,10 @@ public class activity_documents extends AppCompatActivity {
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
+                         //   rv.se
+                            MainActivity.appUser.addDocument(document);
+
+                          //  setRv();
                             System.out.println("UDALO SIEE");
                         }
                     }).addOnFailureListener(new OnFailureListener() {

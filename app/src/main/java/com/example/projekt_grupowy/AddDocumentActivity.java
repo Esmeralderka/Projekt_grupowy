@@ -75,7 +75,7 @@ public class AddDocumentActivity extends AppCompatActivity {
         });
     }
 
-    private void setRecyclerView() {
+    public void setRecyclerView() {
         adapter = new AddDocumentAdapter(this);
         adapter.initializeArray();
         rv = findViewById(R.id.documentsRV);

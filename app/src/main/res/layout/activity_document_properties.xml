@@ -115,12 +115,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_height="wrap_content">
+
                 <com.google.android.material.textfield.TextInputEditText
-                    android:hint="Document Name (Required)"
-                    android:fontFamily="@font/montserrat_semibold"
                     android:id="@+id/etDocumentName"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:hint="Document Name (Required)" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
