@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
@@ -38,6 +39,7 @@ public class DocumentProperties extends AppCompatActivity {
     RecyclerView recyclerView;
     Button addButton;
     Button save;
+    Button cancel;
     DocumentPropertiesAdapter adapter;
     private FirebaseFirestore db;
     CollectionReference ColRef;
@@ -59,6 +61,16 @@ public class DocumentProperties extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.documentsRV);
 
         et_docname.setText(document.getName());
+
+        cancel = findViewById(R.id.button_cancel2);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), activity_documents.class);
+                startActivity(i);
+            }
+        });
+
 
         initializeFieldList();
         setRv();
