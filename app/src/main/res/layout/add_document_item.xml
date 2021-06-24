@@ -35,7 +35,7 @@
         android:layout_marginStart="5dp"
         android:fontFamily="@font/montserrat_semibold"
         android:textColorHint="#2C2F33"
-        app:layout_constraintBottom_toBottomOf="parent"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/fieldNameContainer"
         app:layout_constraintTop_toTopOf="parent">

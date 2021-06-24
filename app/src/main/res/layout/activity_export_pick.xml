@@ -45,17 +45,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/linearLayout" />
 
-    <ImageView
-        android:id="@+id/Button_LogOut"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logout_image"
-        tools:srcCompat="@drawable/back" />
-
     <Button
         android:id="@+id/BExport"
         android:layout_width="wrap_content"
