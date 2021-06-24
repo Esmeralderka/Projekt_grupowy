@@ -76,17 +76,6 @@ public class activity_documents extends AppCompatActivity {
         searchBar=findViewById(R.id.et_search_2);
         documentsAll=documents;
 
-        refresh = findViewById(R.id.button_refresh_4);
-
-        refresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rv.removeAllViews();
-                setRv(documentsAll);
-                adapter.notifyDataSetChanged();
-            }
-        });
-
         addDocumentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

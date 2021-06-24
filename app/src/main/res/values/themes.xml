@@ -17,5 +17,9 @@
     <style name="Theme.Projekt_grupowy.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">#2DD9FF</item>
+        <item name="colorPrimaryVariant">#2DD9FF</item>
+        <item name="colorOnPrimary">#2DD9FF</item>
+        <item name="colorOnSecondary">#2DD9FF</item>
     </style>
 </resources>

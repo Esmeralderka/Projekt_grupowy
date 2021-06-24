@@ -7,27 +7,35 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/fieldNameContainer"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:fontFamily="@font/montserrat_semibold"
         app:layout_constraintEnd_toStartOf="@id/fieldValueContainer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:textColorHint="#2C2F33"
         app:layout_constraintWidth_percent="0.30">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/fieldName"
             android:layout_width="match_parent"
-            android:fontFamily="@font/montserrat_semibold"
             android:layout_height="wrap_content"
-            android:hint="Type" />
+            android:background="#111213"
+            android:fontFamily="@font/montserrat_semibold"
+            android:hint="Type"
+            android:textColor="#c7c7c7"
+            android:textColorHighlight="#c7c7c7"
+            android:textColorHint="#c7c7c7"
+            android:textColorLink="#c7c7c7" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/fieldValueContainer"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginStart="5dp"
         android:fontFamily="@font/montserrat_semibold"
+        android:textColorHint="#2C2F33"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/fieldNameContainer"
         app:layout_constraintTop_toTopOf="parent">
@@ -36,16 +44,23 @@
             android:id="@+id/fieldValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#111213"
             android:fontFamily="@font/montserrat_semibold"
-            android:hint="Value" />
+            android:hint="Value"
+            android:paddingEnd="30dp"
+            android:textColor="#c7c7c7"
+            android:textColorHighlight="#c7c7c7"
+            android:textColorHint="#c7c7c7"
+            android:textColorLink="#c7c7c7" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
         android:id="@+id/deleteField"
-        android:layout_height="30dp"
         android:layout_width="30dp"
+        android:layout_height="30dp"
         android:src="@drawable/ic_baseline_delete_forever_24"
 
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

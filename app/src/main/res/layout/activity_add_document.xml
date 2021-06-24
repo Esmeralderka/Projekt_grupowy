@@ -43,16 +43,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logout_image" />
 
-    <ImageView
-        android:id="@+id/button_refresh_4"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="12dp"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/synchronize_image" />
-
     <TextView
         android:id="@+id/tv_docType"
         style="@style/documents"
@@ -121,13 +111,18 @@
                app:layout_constraintTop_toTopOf="parent"
                app:layout_constraintStart_toStartOf="parent"
                app:layout_constraintEnd_toEndOf="parent"
+               android:textColor="#C7C7C7"
+               android:textColorHint="#2C2F33"
                android:layout_height="wrap_content">
+
                <com.google.android.material.textfield.TextInputEditText
-                   android:hint="Document Name (Required)"
-                   android:fontFamily="@font/montserrat_semibold"
                    android:id="@+id/etDocumentName"
                    android:layout_width="match_parent"
-                   android:layout_height="wrap_content"/>
+                   android:layout_height="wrap_content"
+                   android:background="#111213"
+                   android:fontFamily="@font/montserrat_semibold"
+                   android:hint="Document Name (Required)"
+                   android:textColor="#C7C7C7" />
            </com.google.android.material.textfield.TextInputLayout>
 
 
