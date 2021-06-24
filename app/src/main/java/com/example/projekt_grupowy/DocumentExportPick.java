@@ -69,7 +69,7 @@ public class DocumentExportPick extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.item_actv_format, formats);
         //ACTV.setAdapter(adapter);
 
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.formats));
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, R.layout.item_spinner_style, getResources().getStringArray(R.array.formats));
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter2);
     }
