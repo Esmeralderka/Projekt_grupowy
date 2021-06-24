@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.Collections;
 
@@ -20,19 +21,26 @@ public class DocumentExportPick extends AppCompatActivity {
 
     Button BExport;
     Spinner spinner;
-    AutoCompleteTextView ACTV;
+    //AutoCompleteTextView ACTV;
     RadioGroup radioGroup;
+    TextView tv_docName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_export_pick);
-
+        tv_docName = (TextView) findViewById(R.id.tv_docName);
+        tv_docName.setText(MainActivity.appUser.getDocument(documentPositionInUserDocumentsArrayList).getName());
+        if(tv_docName.getText().length() > 15){
+            String tempTitle = MainActivity.appUser.getDocument(documentPositionInUserDocumentsArrayList).getName().substring(0,15);
+            tempTitle+="...";
+            tv_docName.setText(tempTitle);
+        }
         BExport = (Button) findViewById(R.id.BExport);
 
         //spiner i ACTV robią to samo, wybrac jeden
         spinner = (Spinner) findViewById(R.id.spinner);
-        ACTV = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
+        //ACTV = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
 
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
 
@@ -59,7 +67,7 @@ public class DocumentExportPick extends AppCompatActivity {
     private void populateSpinner() {
         String [] formats = getResources().getStringArray(R.array.formats);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.item_actv_format, formats);
-        ACTV.setAdapter(adapter);
+        //ACTV.setAdapter(adapter);
 
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.formats));
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

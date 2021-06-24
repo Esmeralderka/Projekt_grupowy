@@ -75,6 +75,11 @@ public class DocumentExport extends AppCompatActivity {
 
         tv_docType.setText(format.getFileFormat() + " "+ format.getFileType());
         tv_docName.setText(MainActivity.appUser.getDocument(documentPositionInUserDocumentsArrayList).getName());
+        if(tv_docName.getText().length() > 15){
+            String tempTitle = MainActivity.appUser.getDocument(documentPositionInUserDocumentsArrayList).getName().substring(0,15);
+            tempTitle+="...";
+            tv_docName.setText(tempTitle);
+        }
 
         setRv();
 
