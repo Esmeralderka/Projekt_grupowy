@@ -8,12 +8,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
+import android.widget.Filter;
+import android.widget.Filterable;
 import com.example.projekt_grupowy.DocumentExportPick;
 import com.example.projekt_grupowy.DocumentProperties;
 import com.example.projekt_grupowy.MainActivity;
@@ -27,20 +30,21 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class DocumentsAdapter  extends RecyclerView.Adapter<DocumentsAdapter.ViewHolder>{
+public class DocumentsAdapter  extends RecyclerView.Adapter<DocumentsAdapter.ViewHolder> implements Filterable {
 
     private static final String TAG = "DocumentsAdapter";
     ArrayList<Document> documents;
+    ArrayList<Document> filteredDocuments;
 
     Context context;
     AlertDialog.Builder builder;
 
 
-    public DocumentsAdapter(Context context) {
-        this.documents = MainActivity.appUser.getDocuments();
-        Collections.sort(documents, (Document a1, Document a2) -> a1.getName().compareTo(a2.getName()));
-
+    public DocumentsAdapter(Context context,ArrayList<Document>document){
+        this.documents =document;
         this.context = context;
+        this.filteredDocuments=document;
+
         builder = new AlertDialog.Builder(context);
 
         Log.d("documents adapter docs:", MainActivity.appUser.toString());
@@ -89,7 +93,36 @@ public class DocumentsAdapter  extends RecyclerView.Adapter<DocumentsAdapter.Vie
             });
         }
     }
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String Key = constraint.toString();
+                System.out.println("zawartosc Key "+Key);
+                if(Key.isEmpty()){
+                    documents=filteredDocuments;
+                }else{
+                    ArrayList<Document> lstFiltered=new ArrayList<>();
+                    for(Document row:filteredDocuments){
+                        if(row.getName().toLowerCase().contains(Key.toLowerCase())){
+                            lstFiltered.add(row);
+                        }
+                    }
+                    documents=lstFiltered;
+                }
+                FilterResults filterResults=new FilterResults();
+                filterResults.values=documents;
+                return filterResults;
+            }
 
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                documents =(ArrayList<Document>)results.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
     @Override
     public int getItemCount() {
         return documents.size();

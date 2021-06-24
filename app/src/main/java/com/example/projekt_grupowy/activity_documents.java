@@ -10,6 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.EditText;
+import android.text.Editable;
+import android.text.TextWatcher;
+import java.util.Collections;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,6 +57,10 @@ public class activity_documents extends AppCompatActivity {
     AddDocumentAdapter adapter2;
     DocumentsAdapter adapter ;//= new DocumentsAdapter(this);
     ArrayList<Document> documents;
+    ArrayList<Document>documentsAll;
+    CharSequence search="";
+    EditText searchBar;
+    String AA;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +68,10 @@ public class activity_documents extends AppCompatActivity {
         setContentView(R.layout.activity_documents);
         rv = (RecyclerView) findViewById(R.id.documentsRV);
         addDocumentButton = findViewById(R.id.button_addField);
-
+        documents=MainActivity.appUser.getDocuments();
+        Collections.sort(documents, (Document a1, Document a2) -> a1.getName().compareTo(a2.getName()));
+        searchBar=findViewById(R.id.et_search_2);
+        documentsAll=documents;
 
         refresh = findViewById(R.id.button_refresh_4);
 
@@ -68,7 +79,7 @@ public class activity_documents extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 rv.removeAllViews();
-                setRv();
+                setRv(documentsAll);
                 adapter.notifyDataSetChanged();
             }
         });
@@ -79,9 +90,27 @@ public class activity_documents extends AppCompatActivity {
                 navigateToAddDocument();
             }
         });
-        setRv();
+        setRv(documentsAll);
 
         ImageView_LogOut = (ImageView) findViewById(R.id.ImageView_LogOut);
+
+        searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                adapter.getFilter().filter(s);
+                search=s;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         ImageView_LogOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,23 +136,22 @@ public class activity_documents extends AppCompatActivity {
         });
     }
 
-    @Override
+    /*@Override
     protected void onResume()
     {
         super.onResume();
         setRv();
+    }*/
+
+    private void setRv(ArrayList<Document>document){
+        adapter= new DocumentsAdapter(this,document);
+        rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        rv.setAdapter(adapter);
     }
 
     private void navigateToAddDocument(){
         Intent intent = new Intent(getApplicationContext(), AddDocumentActivity.class);
         startActivity(intent);
-    }
-
-    private void setRv(){
-        adapter = new DocumentsAdapter(this);
-        rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        rv.setAdapter(adapter);
-        System.out.println("HALO WYWOLUJE SIE TO KIEDY??");
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
