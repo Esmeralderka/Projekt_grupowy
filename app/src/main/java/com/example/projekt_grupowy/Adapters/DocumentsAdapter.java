@@ -15,7 +15,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
+import android.widget.Filter;
+import android.widget.Filterable;
 import com.example.projekt_grupowy.DocumentExportPick;
 import com.example.projekt_grupowy.DocumentProperties;
 import com.example.projekt_grupowy.MainActivity;
@@ -34,6 +35,7 @@ public class DocumentsAdapter  extends RecyclerView.Adapter<DocumentsAdapter.Vie
     private static final String TAG = "DocumentsAdapter";
     ArrayList<Document> documents;
     ArrayList<Document> filteredDocuments;
+
     Context context;
     AlertDialog.Builder builder;
 
@@ -42,6 +44,7 @@ public class DocumentsAdapter  extends RecyclerView.Adapter<DocumentsAdapter.Vie
         this.documents =document;
         this.context = context;
         this.filteredDocuments=document;
+
         builder = new AlertDialog.Builder(context);
 
         Log.d("documents adapter docs:", MainActivity.appUser.toString());
@@ -62,36 +65,20 @@ public class DocumentsAdapter  extends RecyclerView.Adapter<DocumentsAdapter.Vie
         {
             int _position = position;
 
-
             holder.tv_Title.setText(documents.get(position).getName());
             holder.tv_Title.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int aa=0;
-                    for(int i=0;i<filteredDocuments.size();i++){
-                        if(documents.get(_position).getName().equals(filteredDocuments.get(i).getName())){
-                            System.out.println("ZGADZA SIE");
-                            aa=i;
-                        }
-                    }
-                    DocumentProperties.documentPositionInUserDocumentsArrayList = aa;
+                    DocumentProperties.documentPositionInUserDocumentsArrayList = _position;
                     Intent intent =  new Intent(v.getContext(), DocumentProperties.class);
                     v.getContext().startActivity(intent);
-
                 }
             });
 
             holder.iv_export.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int aa=0;
-                    for(int i=0;i<filteredDocuments.size();i++){
-                        if(documents.get(_position).getName().equals(filteredDocuments.get(i).getName())){
-                            System.out.println("ZGADZA SIE");
-                            aa=i;
-                        }
-                    }
-                    DocumentExportPick.documentPositionInUserDocumentsArrayList = aa;
+                    DocumentExportPick.documentPositionInUserDocumentsArrayList = _position;
                     Intent intent =  new Intent(v.getContext(), DocumentExportPick.class);
                     v.getContext().startActivity(intent);
                 }
@@ -106,12 +93,40 @@ public class DocumentsAdapter  extends RecyclerView.Adapter<DocumentsAdapter.Vie
             });
         }
     }
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String Key = constraint.toString();
+                System.out.println("zawartosc Key "+Key);
+                if(Key.isEmpty()){
+                    documents=filteredDocuments;
+                }else{
+                    ArrayList<Document> lstFiltered=new ArrayList<>();
+                    for(Document row:filteredDocuments){
+                        if(row.getName().toLowerCase().contains(Key.toLowerCase())){
+                            lstFiltered.add(row);
+                        }
+                    }
+                    documents=lstFiltered;
+                }
+                FilterResults filterResults=new FilterResults();
+                filterResults.values=documents;
+                return filterResults;
+            }
 
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                documents =(ArrayList<Document>)results.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
     @Override
     public int getItemCount() {
         return documents.size();
     }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -176,37 +191,4 @@ public class DocumentsAdapter  extends RecyclerView.Adapter<DocumentsAdapter.Vie
         AlertDialog alert = builder.create();
         alert.show();
     }
-
-    @Override
-    public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                String Key = constraint.toString();
-                System.out.println("zawartosc Key "+Key);
-                if(Key.isEmpty()){
-                    documents=filteredDocuments;
-                }else{
-                    ArrayList<Document> lstFiltered=new ArrayList<>();
-                    for(Document row:filteredDocuments){
-                        if(row.getName().toLowerCase().contains(Key.toLowerCase())){
-                            lstFiltered.add(row);
-                        }
-                    }
-                    documents=lstFiltered;
-                }
-                FilterResults filterResults=new FilterResults();
-                filterResults.values=documents;
-                return filterResults;
-            }
-
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-                documents =(ArrayList<Document>)results.values;
-                notifyDataSetChanged();
-            }
-        };
-    }
-
-
 }
