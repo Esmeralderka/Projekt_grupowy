@@ -84,7 +84,7 @@ public class activity_documents extends AppCompatActivity {
 
                 rv.removeAllViews();
 
-                setRv(documents);
+                setRv();
                 adapter.notifyDataSetChanged();
                 // MainActivity.appUser.addDocument(newDocument);
 //                doc_activ.setRecyclerView();
@@ -132,7 +132,7 @@ public class activity_documents extends AppCompatActivity {
         Collections.sort(documents, (Document a1, Document a2) -> a1.getName().compareTo(a2.getName()));
         searchBar=findViewById(R.id.et_search_2);
         documentsAll=documents;
-        setRv(documentsAll);
+        //setRv();
 
 
         searchBar.addTextChangedListener(new TextWatcher() {
@@ -213,12 +213,12 @@ public class activity_documents extends AppCompatActivity {
         rv.setAdapter(adapter);
         System.out.println("HALO WYWOLUJE SIE TO KIEDY??");
     }
-/*    private void setRv(){
+    private void setRv(){
         adapter = new DocumentsAdapter(this);
         rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rv.setAdapter(adapter);
         System.out.println("HALO WYWOLUJE SIE TO KIEDY??");
-    }*/
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     @Override

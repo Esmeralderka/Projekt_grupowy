@@ -37,6 +37,13 @@ public class DocumentsAdapter  extends RecyclerView.Adapter<DocumentsAdapter.Vie
     Context context;
     AlertDialog.Builder builder;
 
+    public DocumentsAdapter(Context context) {
+        this.documents = MainActivity.appUser.getDocuments();
+        Collections.sort(documents, (Document a1, Document a2) -> a1.getName().compareTo(a2.getName()));
+        this.context = context;
+        builder = new AlertDialog.Builder(context);
+
+    }
 
     public DocumentsAdapter(Context context,ArrayList<Document>document){
         this.documents =document;
