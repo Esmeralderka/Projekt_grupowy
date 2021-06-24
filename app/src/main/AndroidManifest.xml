@@ -9,13 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Projekt_grupowy.NoActionBar">
-        <activity android:name=".Models.Import"></activity>
         <activity android:name=".DocumentProperties" />
         <activity android:name=".DocumentExport" />
         <activity android:name=".DocumentExportPick" />
         <activity
             android:name=".activity_documents"
             android:theme="@style/Theme.Projekt_grupowy.NoActionBar" />
+
         <activity
             android:name=".AddDocumentActivity"
             android:theme="@style/Theme.Projekt_grupowy.NoActionBar" />

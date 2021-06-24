@@ -1,11 +1,14 @@
 package com.example.projekt_grupowy;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,39 +18,22 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import java.util.Collections;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.projekt_grupowy.Adapters.AddDocumentAdapter;
 import com.example.projekt_grupowy.Adapters.DocumentsAdapter;
 import com.example.projekt_grupowy.Models.Document;
-import com.example.projekt_grupowy.Models.Import;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.xml.parsers.DocumentBuilder;
+import java.util.Collections;
 
 public class activity_documents extends AppCompatActivity {
 
     RecyclerView rv;
     Button addDocumentButton;
-    Button importFileButton;
     ImageView ImageView_LogOut;
     Intent myFileIntent;
     DocumentBuilder builder;
@@ -66,6 +52,7 @@ public class activity_documents extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_documents);
+
         rv = (RecyclerView) findViewById(R.id.documentsRV);
         addDocumentButton = findViewById(R.id.button_addField);
         documents=MainActivity.appUser.getDocuments();
