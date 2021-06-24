@@ -35,6 +35,7 @@ public class AddDocumentActivity extends AppCompatActivity {
 
     Button addButton;
     Button confirm;
+    Button cancel;
     private FirebaseFirestore db;
     CollectionReference ColRef;
 
@@ -47,10 +48,19 @@ public class AddDocumentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_document);
         etDocumentName = findViewById(R.id.etDocumentName);
+        cancel = findViewById(R.id.button_cancel);
 
         db = FirebaseFirestore.getInstance();
         Log.d("appuser uid", MainActivity.appUser.getUID());
         ColRef = db.collection("users").document(MainActivity.appUser.getUID()).collection("documents");
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), activity_documents.class);
+                startActivity(i);
+            }
+        });
 
 
         setRecyclerView();
