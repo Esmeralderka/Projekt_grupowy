@@ -67,51 +67,9 @@ public class activity_documents extends AppCompatActivity {
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // REFRESH
-
-              //  documents.get(docPosition).getUID())
-
                 rv.removeAllViews();
-
                 setRv();
                 adapter.notifyDataSetChanged();
-               // MainActivity.appUser.addDocument(newDocument);
-//                doc_activ.setRecyclerView();
-              //  adapter.onBindViewHolder();
-                /*adapter2 = new AddDocumentAdapter(v.getContext());
-                adapter2.initializeArray();
-                rv = findViewById(R.id.documentsRV);
-                rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                rv.setAdapter(adapter2);*/
-
-              /*  rv.removeAllViews();
-                adapter.notifyItemInserted(8);*/
-            //    navigate();
-                //System.out.println(rv.getI);
-               /* adapter = new DocumentsAdapter(v.getContext());
-                rv.invalidate();
-
-                setRv();
-                System.out.println("HALO DO CHOLERY DZIEJE SIE COS??");
-                adapter.notifyDataSetChanged();*/
-                //doc_activ.set
-
-                /*adapter = new AddDocumentAdapter(v.getContext());
-                adapter.initializeArray();
-                rv = findViewById(R.id.documentsRV);
-                rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                rv.setAdapter(adapter);*/
-
-
-                //AddDocumentAdapter addDocumentAdapter = new AddDocumentAdapter(v.getContext());
-               // addDocumentAdapter.onCreateViewHolder();
-
-               /* Intent i = new Intent(getApplicationContext(), activity_documents.class);
-                startActivity(i);*/
-             /* DocumentsAdapter adapter = new DocumentsAdapter(v.getContext());
-                rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                rv.setAdapter(adapter);*/
-
             }
         });
 
@@ -141,16 +99,10 @@ public class activity_documents extends AppCompatActivity {
         importFileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // MainActivity.logout();
                 Intent gallery = new Intent();
                 gallery.setType("*/*");
                 gallery.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(gallery, "Select document"),1);
-
-                // Uwaga: wyczyszczenie flag zablokuje mozliwosc powrotu do poprzedniego ekranu, ale w zamian korzystajac z przycisku
-                // powrotu wywali uzytkownika do ekranu (zminimalizuje apke)
-                // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                //startActivity(intent);
             }
         });
     }
