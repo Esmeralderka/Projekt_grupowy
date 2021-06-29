@@ -7,6 +7,7 @@ public class RIS_Generic extends RIS {
     public RIS_Generic(String type) {
         super(type);
     }
+    public RIS_Generic() { super("GEN"); }
 
     @Override
     protected void initialize() {
@@ -102,7 +103,5 @@ public class RIS_Generic extends RIS {
         addField("Primary Date", "Y1");
         addField("Access Date", "Y2");
         addField("End of Reference", "ER");
-
-
     }
 }

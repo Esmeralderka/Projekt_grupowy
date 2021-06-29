@@ -69,8 +69,8 @@ public class AddDocumentActivity extends AppCompatActivity {
 
     private void setOnClickListeners() {
         addButton = findViewById(R.id.addButton);
-
         confirm = findViewById(R.id.button_confirm);
+
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

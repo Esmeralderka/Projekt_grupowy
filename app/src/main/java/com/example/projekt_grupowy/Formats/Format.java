@@ -59,22 +59,32 @@ public abstract class Format {
     protected boolean validateHashMap(HashMap<String, String> hashMap) {
         boolean validate = true;
 
+        System.out.println("validateHashMap");
+        System.out.println(fileFormat + " " + fileType);
+
+
         for(String key : keys) {
 
             if (usesShortNames()) {
                 if (!formatFields.containsKey(key) || formatFieldsShort.get(key).equals("")) {
+
+                    System.out.println("1##############"+formatFields.containsKey(key)+" "+formatFieldsShort.get(key).equals(""));
+
                     validate = false;
                     break;
                 }
             }
 
             if (!hashMap.containsKey(key)) {
+                System.out.println("2##############"+hashMap.containsKey(key)+key);
+
                 validate = false;
                 break;
             }
 
             if (isFieldRequired.get(key)) {
                 if (hashMap.get(key).equals("")) {
+                    System.out.println("3############## "+key+" "+hashMap.get(key).equals(""));
                     validate = false;
                     break;
                 }

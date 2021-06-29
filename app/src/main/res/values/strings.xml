@@ -20,6 +20,125 @@
 
         <item>EndNote_Generic</item>
 
-        <item>RIS_Generic</item>
+        <item>RIS</item>
     </string-array>
+
+    <string-array name="risFormatsName">
+        <item>ABST</item>
+        <item>ADVS</item>
+        <item>AGGR</item>
+        <item>ANCIENT</item>
+        <item>ART</item>
+        <item>BILL</item>
+        <item>BLOG</item>
+        <item>BOOK</item>
+        <item>CASE</item>
+        <item>CHAP</item>
+        <item>CHART</item>
+        <item>CLSWK</item>
+        <item>COMP</item>
+        <item>CONF</item>
+        <item>CPAPER</item>
+        <item>CTLG</item>
+        <item>DATA</item>
+        <item>DBASE</item>
+        <item>DICT</item>
+        <item>EBOOK</item>
+        <item>ECHAP</item>
+        <item>EDBOOK</item>
+        <item>EJOUR</item>
+        <item>WEB</item>
+        <item>ENCYC</item>
+        <item>EQUA</item>
+        <item>FIGURE</item>
+        <item>GEN</item>
+        <item>GOVDOC</item>
+        <item>GRANT</item>
+        <item>HEAR</item>
+        <item>ICOMM</item>
+        <item>INPR</item>
+        <item>JFULL</item>
+        <item>JOUR</item>
+        <item>LEGAL</item>
+        <item>MANSCPT</item>
+        <item>MAP</item>
+        <item>MGZN</item>
+        <item>MPCT</item>
+        <item>MULTI</item>
+        <item>MUSIC</item>
+        <item>NEWS</item>
+        <item>PAMP</item>
+        <item>PAT</item>
+        <item>PCOMM</item>
+        <item>RPRT</item>
+        <item>SER</item>
+        <item>SLIDE</item>
+        <item>SOUND</item>
+        <item>STAND</item>
+        <item>STAT</item>
+        <item>THES</item>
+        <item>UNBILL</item>
+        <item>UNPB</item>
+        <item>VIDEO</item>
+    </string-array>
+
+    <string-array name="risFormatsFullName">
+        <item>Abstract</item>
+        <item>Audiovisual material</item>
+        <item>Aggregated Database</item>
+        <item>Ancient Text</item>
+        <item>Work</item>
+        <item>Bill</item>
+        <item>Blog</item>
+        <item>Whole book</item>
+        <item>Case</item>
+        <item>Book chapter</item>
+        <item>Chart</item>
+        <item>Classical Work</item>
+        <item>Computer program</item>
+        <item>Conference proceeding</item>
+        <item>Conference paper</item>
+        <item>Data file</item>
+        <item>Catalog</item>
+        <item>Online Database</item>
+        <item>Dictionary</item>
+        <item>Electronic Book</item>
+        <item>Electronic Book Section</item>
+        <item>Edited Book</item>
+        <item>Electronic Article</item>
+        <item>Web Page</item>
+        <item>Encyclopedia</item>
+        <item>Equation</item>
+        <item>Figure</item>
+        <item>Generic</item>
+        <item>Government Document</item>
+        <item>Grant</item>
+        <item>Hearing</item>
+        <item>Internet Communication</item>
+        <item>In Press</item>
+        <item>Journal (full)</item>
+        <item>Journal</item>
+        <item>Legal Rule or Regulation</item>
+        <item>Manuscript</item>
+        <item>Map</item>
+        <item>Magazine article</item>
+        <item>Motion picture</item>
+        <item>Online Multimedia</item>
+        <item>Music score</item>
+        <item>Newspaper</item>
+        <item>Pamphlet</item>
+        <item>Patent</item>
+        <item>Personal communication</item>
+        <item>Report</item>
+        <item>Serial publication</item>
+        <item>Slide</item>
+        <item>Sound recording</item>
+        <item>Standard</item>
+        <item>Statute</item>
+        <item>Thesis/Dissertation</item>
+        <item>Unenacted Bill</item>
+        <item>npublished work</item>
+        <item>Video recording</item>
+    </string-array>
+
 </resources>

@@ -65,9 +65,9 @@ public class DocumentsAdapter  extends RecyclerView.Adapter<DocumentsAdapter.Vie
         {
             int _position = position;
 
-            holder.tv_Title.setText(documents.get(position).getName());
-            if(documents.get(position).getName().length() > 15){
-                String tempTitle = documents.get(position).getName().substring(0,15);
+            holder.tv_Title.setText(documents.get(_position).getName());
+            if(documents.get(_position).getName().length() > 15){
+                String tempTitle = documents.get(_position).getName().substring(0,15);
                 tempTitle+="...";
                 holder.tv_Title.setText(tempTitle);
             }

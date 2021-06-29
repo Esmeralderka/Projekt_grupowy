@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -13,6 +14,8 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class DocumentExportPick extends AppCompatActivity {
@@ -21,6 +24,7 @@ public class DocumentExportPick extends AppCompatActivity {
 
     Button BExport;
     Spinner spinner;
+    Spinner spinnerRIS;
     //AutoCompleteTextView ACTV;
     RadioGroup radioGroup;
     TextView tv_docName;
@@ -38,19 +42,45 @@ public class DocumentExportPick extends AppCompatActivity {
         }
         BExport = (Button) findViewById(R.id.BExport);
 
-        //spiner i ACTV robią to samo, wybrac jeden
         spinner = (Spinner) findViewById(R.id.spinner);
-        //ACTV = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
-
-        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+        spinnerRIS = (Spinner) findViewById(R.id.spinnerRIS);
 
         populateSpinner();
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(spinner.getSelectedItem().toString().equals("RIS")){
+                    populateSpinnerRIS();
+                    spinnerRIS.setVisibility(View.VISIBLE);
+                }else if(spinner.getSelectedItem().toString().equals("BibTeX")){
+                    //TODO
+                    spinnerRIS.setVisibility(View.INVISIBLE);
+                }else{
+                    spinnerRIS.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
+
+        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
 
 
         BExport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DocumentExport.documentFormat = spinner.getSelectedItem().toString();
+
+                if(spinner.getSelectedItem().toString().equals("RIS")){
+
+                    ArrayList<ArrayList<String>> risFormats = new ArrayList<>();
+                    risFormats.add(new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.risFormatsName))));
+                    risFormats.add(new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.risFormatsFullName))));
+
+                    DocumentExport.RIS_format = risFormats.get(0).get(spinnerRIS.getSelectedItemPosition());
+                }
 
                 int selectedId = radioGroup.getCheckedRadioButtonId();
                 RadioButton radioButton = (RadioButton) findViewById(selectedId);
@@ -67,10 +97,19 @@ public class DocumentExportPick extends AppCompatActivity {
     private void populateSpinner() {
         String [] formats = getResources().getStringArray(R.array.formats);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.item_actv_format, formats);
-        //ACTV.setAdapter(adapter);
 
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, R.layout.item_spinner_style, getResources().getStringArray(R.array.formats));
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter2);
     }
+
+    private void populateSpinnerRIS() {
+        String [] formats = getResources().getStringArray(R.array.formats);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.item_actv_format, formats);
+
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, R.layout.item_spinner_style, getResources().getStringArray(R.array.risFormatsFullName));
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerRIS.setAdapter(adapter2);
+    }
+
 }

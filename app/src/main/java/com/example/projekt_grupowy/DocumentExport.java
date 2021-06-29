@@ -1,9 +1,14 @@
 package com.example.projekt_grupowy;
 
+import android.Manifest;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Adapter;
@@ -13,7 +18,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,6 +45,12 @@ import com.example.projekt_grupowy.Formats.EndNote_Generic;
 import com.example.projekt_grupowy.Formats.Format;
 import com.example.projekt_grupowy.Formats.RIS_Generic;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class DocumentExport extends AppCompatActivity {
@@ -45,6 +58,7 @@ public class DocumentExport extends AppCompatActivity {
     public static int documentPositionInUserDocumentsArrayList;
 
     public static String documentFormat;
+    public static String RIS_format;
     public static String exportTo;
 
     private Format format;
@@ -124,10 +138,85 @@ public class DocumentExport extends AppCompatActivity {
                 ClipData clip = ClipData.newPlainText("doc", format.getFormat());
                 clipboard.setPrimaryClip(clip);
             }else if(exportTo.equals("file")){
-                //TODO
+                saveToFile();
+            }
+        }
+    }
+
+    private void saveToFile(){
+
+        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+
+        FileOutputStream fos = null;
+
+        String fileName = MainActivity.appUser.getDocument(documentPositionInUserDocumentsArrayList).getName();
+        fileName += ".";
+        fileName += format.getFileFormat();
+
+        //if user OS is greater than 23, runtime permission
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                String [] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+                //ask for permission
+                requestPermissions(permissions, 1);
+            }else {
+                //permission already granted
+                save();
+            }
+        }else{
+            //user OS < 23, no need for permission
+            save();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case 1:
+                //if permission is not granted, grantResults array is empty
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    save();
+                }else {
+                    Toast.makeText(this, "Storage permission is required to save a file", Toast.LENGTH_LONG);
+                }
+        }
+    }
+
+    private void save(){
+
+        try {
+            //path to storage
+            File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+
+            //create folder "DocPol_documents"
+            File dir = new File(path + "/DocPol_documents/");
+            //File dir = new File(String.valueOf(path));
+            if (! dir.exists()){
+                dir.mkdirs();
             }
 
+            if (!dir.mkdirs()) { Log.d("Un Available:" , path.getAbsolutePath()); }
 
+            //file name based on document name
+            String fileName = MainActivity.appUser.getDocument(documentPositionInUserDocumentsArrayList).getName();
+            fileName += ".";
+            fileName += format.getFileFormat();
+
+            File new_file = new File(dir, fileName);
+
+            //FileWriter class is used to storage characters in file
+            FileWriter fw = new FileWriter(new_file.getAbsoluteFile());
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(format.getFormat());
+            bw.close();
+
+            //info
+            Toast.makeText(this, "file " + fileName + " saved to:\n" + dir, Toast.LENGTH_LONG);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG);
         }
     }
 
@@ -185,9 +274,8 @@ public class DocumentExport extends AppCompatActivity {
             case "EndNote_Generic":
                 format = new EndNote_Generic();
                 break;
-            case "RIS_Generic":
-                //TODO: dowiedzieć się co z tymi formatami RIS
-                //format = new RIS_Generic();
+            case "RIS":
+                format = new RIS_Generic(RIS_format);
                 break;
         }
     }

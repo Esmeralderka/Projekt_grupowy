@@ -17,7 +17,7 @@ public abstract class RIS  extends Format {
         for (String key : getKeys()) {
 
             if (!formatFields.get(key).equals("")) {
-                output += "\n" + formatFieldsShort.get(key) + " " + formatFields.get(key) + "\n";
+                output += "\n" + formatFieldsShort.get(key) + " " + formatFields.get(key);
             }
         }
         output += "\nER - ";
