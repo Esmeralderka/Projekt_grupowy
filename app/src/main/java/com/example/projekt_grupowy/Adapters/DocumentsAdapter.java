@@ -75,7 +75,8 @@ public class DocumentsAdapter  extends RecyclerView.Adapter<DocumentsAdapter.Vie
             holder.tv_Title.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    DocumentProperties.documentPositionInUserDocumentsArrayList = _position;
+                    //DocumentProperties.documentPositionInUserDocumentsArrayList = _position;
+                    DocumentProperties.document = documents.get(_position);
                     Intent intent =  new Intent(v.getContext(), DocumentProperties.class);
                     v.getContext().startActivity(intent);
                 }

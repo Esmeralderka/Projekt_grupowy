@@ -55,6 +55,22 @@ public class User {
 
     public void setDocument(Document document,int position) {documents.set(position,document);}
 
+
+    public void setDocument(Document document) {
+
+        int pos = -1;
+
+        for (Document doc : documents) {
+            if (doc.getName().equals(document.getName())) {
+                pos = documents.indexOf(doc);
+                break;
+            }
+        }
+
+        if (pos == -1) return;
+        documents.set(pos,document);
+    }
+
     public Document getDocument(int position) {return documents.get(position);}
 
     public void setDocuments(ArrayList<Document> documents) {

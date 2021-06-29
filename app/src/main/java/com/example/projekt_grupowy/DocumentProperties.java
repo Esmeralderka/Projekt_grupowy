@@ -29,9 +29,10 @@ import java.util.UUID;
 
 public class DocumentProperties extends AppCompatActivity {
 
-    public static int documentPositionInUserDocumentsArrayList;
+    //public static int documentPositionInUserDocumentsArrayList;
+    public static Document document;
 
-    private Document document;
+    //private Document document;
     ArrayList<Pair<String,String>> documentFields;
 
     //TextView tv_docName;
@@ -53,7 +54,7 @@ public class DocumentProperties extends AppCompatActivity {
         Log.d("appuser uid", MainActivity.appUser.getUID());
         ColRef = db.collection("users").document(MainActivity.appUser.getUID()).collection("documents");
 
-        document = MainActivity.appUser.getDocuments().get(documentPositionInUserDocumentsArrayList);
+        //document = MainActivity.appUser.getDocuments().get(documentPositionInUserDocumentsArrayList);
 
         save = (Button) findViewById(R.id.button_Save);
         addButton = (Button) findViewById(R.id.addButton);
@@ -168,13 +169,11 @@ public class DocumentProperties extends AppCompatActivity {
         });
 
 
-        Document newDocument = new Document(MainActivity.appUser.getDocument(documentPositionInUserDocumentsArrayList).getUID(),
-                temp
-        );
+        Document newDocument = new Document(document.getUID(), temp );
 
         Log.d("appUser przed edycja dokumentu: ", MainActivity.appUser.toString());
         //MainActivity.appUser.addDocument(newDocument);
-        MainActivity.appUser.setDocument(newDocument,documentPositionInUserDocumentsArrayList);
+        MainActivity.appUser.setDocument(newDocument);
         Log.d("appUser po edycji dokumentu: ", MainActivity.appUser.toString());
 
         ColRef.document(newDocument.getUID()).set(toDb);
