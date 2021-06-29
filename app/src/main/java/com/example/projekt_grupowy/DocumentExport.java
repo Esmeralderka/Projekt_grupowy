@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -137,16 +138,22 @@ public class DocumentExport extends AppCompatActivity {
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("doc", format.getFormat());
                 clipboard.setPrimaryClip(clip);
+
+                //info
+                Toast.makeText(this, "document was successfully converted and copied to your clipboard", Toast.LENGTH_LONG).show();
+
+                //back to main screen
+                goBackToDocumentsScreen();
+
             }else if(exportTo.equals("file")){
                 saveToFile();
             }
+        }else{
+            Toast.makeText(this, "Please fill all required fields", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void saveToFile(){
-
-        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-
         FileOutputStream fos = null;
 
         String fileName = MainActivity.appUser.getDocument(documentPositionInUserDocumentsArrayList).getName();
@@ -178,7 +185,7 @@ public class DocumentExport extends AppCompatActivity {
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     save();
                 }else {
-                    Toast.makeText(this, "Storage permission is required to save a file", Toast.LENGTH_LONG);
+                    Toast.makeText(this, "Storage permission is required to save a file", Toast.LENGTH_LONG).show();
                 }
         }
     }
@@ -212,8 +219,10 @@ public class DocumentExport extends AppCompatActivity {
             bw.close();
 
             //info
-            Toast.makeText(this, "file " + fileName + " saved to:\n" + dir, Toast.LENGTH_LONG);
+            Toast.makeText(this, "file " + fileName + " saved to:\n" + dir, Toast.LENGTH_LONG).show();
 
+            //back to main screen
+            goBackToDocumentsScreen();
         } catch (IOException e) {
             e.printStackTrace();
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG);
@@ -226,52 +235,57 @@ public class DocumentExport extends AppCompatActivity {
         RVExport.setAdapter(adapter);
     }
 
+    private void goBackToDocumentsScreen(){
+        Intent intent = new Intent(getApplicationContext(), activity_documents.class);
+        startActivity(intent);
+    }
+
     private void setFormat()
     {
         switch (documentFormat){
-            case "BibTeX_Article":
+            case "BibTeX Article":
                 format = new BibTeX_Article();
                 break;
-            case "BibTeX_Book":
+            case "BibTeX Book":
                 format = new BibTeX_Book();
                 break;
-            case "BibTeX_Booklet":
+            case "BibTeX Booklet":
                 format = new BibTeX_Booklet();
                 break;
-            case "BibTeX_Conference":
+            case "BibTeX Conference":
                 format = new BibTeX_Conference();
                 break;
-            case "BibTeX_Inbook":
+            case "BibTeX Inbook":
                 format = new BibTeX_Inbook();
                 break;
-            case "BibTeX_Incollection":
+            case "BibTeX Incollection":
                 format = new BibTeX_Incollection();
                 break;
-            case "BibTeX_Inproceedings":
+            case "BibTeX Inproceedings":
                 format = new BibTeX_Inproceedings();
                 break;
-            case "BibTeX_Manual":
+            case "BibTeX Manual":
                 format = new BibTeX_Manual();
                 break;
-            case "BibTeX_Mastersthesis":
+            case "BibTeX Mastersthesis":
                 format = new BibTeX_Mastersthesis();
                 break;
-            case "BibTeX_Misc":
+            case "BibTeX Misc":
                 format = new BibTeX_Misc();
                 break;
-            case "BibTeX_Phdthesis":
+            case "BibTeX Phdthesis":
                 format = new BibTeX_Phdthesis();
                 break;
-            case "BibTeX_Proceedings":
+            case "BibTeX Proceedings":
                 format = new BibTeX_Proceedings();
                 break;
-            case "BibTeX_Techreport":
+            case "BibTeX Techreport":
                 format = new BibTeX_Techreport();
                 break;
-            case "BibTeX_Unpublished":
+            case "BibTeX Unpublished":
                 format = new BibTeX_Unpublished();
                 break;
-            case "EndNote_Generic":
+            case "EndNote Generic":
                 format = new EndNote_Generic();
                 break;
             case "RIS":

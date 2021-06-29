@@ -45,36 +45,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/linearLayout" />
 
-    <Button
-        android:id="@+id/BExport"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginStart="128dp"
-        android:layout_marginEnd="128dp"
-        android:layout_marginBottom="30dp"
-        android:fontFamily="@font/montserrat_semibold"
-        android:text="Export"
-        android:textColorHighlight="#FFFFFF"
-        android:textColorHint="#C7C7C7"
-        android:textColorLink="#00FF0000"
-        android:textSize="26dp"
-        app:backgroundTint="#2C2F33"
-        app:cornerRadius="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:rippleColor="#C7C7C7"
-        app:strokeColor="#C7C7C7"
-        app:strokeWidth="2dp" />
-
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="413dp"
-        android:layout_height="433dp"
-        android:layout_marginTop="183dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -169,7 +146,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_docName3" />
 
                 <Spinner
-                    android:id="@+id/spinnerRIS"
+                    android:id="@+id/spinnerFormatType"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="55dp"
@@ -181,6 +158,27 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/spinner" />
+
+                <Button
+                    android:id="@+id/BExport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:text="Export"
+                    android:textColorHighlight="#FFFFFF"
+                    android:textColorHint="#C7C7C7"
+                    android:textColorLink="#00FF0000"
+                    android:textSize="26dp"
+                    app:backgroundTint="#2C2F33"
+                    app:cornerRadius="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/spinnerFormatType"
+                    app:rippleColor="#C7C7C7"
+                    app:strokeColor="#C7C7C7"
+                    app:strokeWidth="2dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>

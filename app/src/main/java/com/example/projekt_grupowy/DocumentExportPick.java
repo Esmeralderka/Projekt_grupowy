@@ -24,7 +24,7 @@ public class DocumentExportPick extends AppCompatActivity {
 
     Button BExport;
     Spinner spinner;
-    Spinner spinnerRIS;
+    Spinner spinnerFormatType;
     //AutoCompleteTextView ACTV;
     RadioGroup radioGroup;
     TextView tv_docName;
@@ -43,7 +43,7 @@ public class DocumentExportPick extends AppCompatActivity {
         BExport = (Button) findViewById(R.id.BExport);
 
         spinner = (Spinner) findViewById(R.id.spinner);
-        spinnerRIS = (Spinner) findViewById(R.id.spinnerRIS);
+        spinnerFormatType = (Spinner) findViewById(R.id.spinnerFormatType);
 
         populateSpinner();
 
@@ -52,12 +52,12 @@ public class DocumentExportPick extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(spinner.getSelectedItem().toString().equals("RIS")){
                     populateSpinnerRIS();
-                    spinnerRIS.setVisibility(View.VISIBLE);
+                    spinnerFormatType.setVisibility(View.VISIBLE);
                 }else if(spinner.getSelectedItem().toString().equals("BibTeX")){
-                    //TODO
-                    spinnerRIS.setVisibility(View.INVISIBLE);
+                    populateSpinnerBibTeX();
+                    spinnerFormatType.setVisibility(View.VISIBLE);
                 }else{
-                    spinnerRIS.setVisibility(View.INVISIBLE);
+                    spinnerFormatType.setVisibility(View.INVISIBLE);
                 }
             }
 
@@ -79,7 +79,9 @@ public class DocumentExportPick extends AppCompatActivity {
                     risFormats.add(new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.risFormatsName))));
                     risFormats.add(new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.risFormatsFullName))));
 
-                    DocumentExport.RIS_format = risFormats.get(0).get(spinnerRIS.getSelectedItemPosition());
+                    DocumentExport.RIS_format = risFormats.get(0).get(spinnerFormatType.getSelectedItemPosition());
+                }else if(spinner.getSelectedItem().toString().equals("BibTeX")){
+                    DocumentExport.documentFormat = spinnerFormatType.getSelectedItem().toString();
                 }
 
                 int selectedId = radioGroup.getCheckedRadioButtonId();
@@ -109,7 +111,16 @@ public class DocumentExportPick extends AppCompatActivity {
 
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, R.layout.item_spinner_style, getResources().getStringArray(R.array.risFormatsFullName));
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerRIS.setAdapter(adapter2);
+        spinnerFormatType.setAdapter(adapter2);
+    }
+
+    private void populateSpinnerBibTeX() {
+        String [] formats = getResources().getStringArray(R.array.formats);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.item_actv_format, formats);
+
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, R.layout.item_spinner_style, getResources().getStringArray(R.array.bibTexFormatName));
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerFormatType.setAdapter(adapter2);
     }
 
 }

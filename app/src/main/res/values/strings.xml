@@ -2,25 +2,27 @@
     <string name="app_name">Projekt_grupowy</string>
 
     <string-array name="formats">
-
-        <item>BibTeX_Article</item>
-        <item>BibTeX_Book</item>
-        <item>BibTeX_Booklet</item>
-        <item>BibTeX_Conference</item>
-        <item>BibTeX_Inbook</item>
-        <item>BibTeX_Incollection</item>
-        <item>BibTeX_Inproceedings</item>
-        <item>BibTeX_Manual</item>
-        <item>BibTeX_Mastersthesis</item>
-        <item>BibTeX_Misc</item>
-        <item>BibTeX_Phdthesis</item>
-        <item>BibTeX_Proceedings</item>
-        <item>BibTeX_Techreport</item>
-        <item>BibTeX_Unpublished</item>
-
+        <item>BibTeX</item>
         <item>EndNote_Generic</item>
-
         <item>RIS</item>
+    </string-array>
+
+
+    <string-array name="bibTexFormatName">
+        <item>BibTeX Article</item>
+        <item>BibTeX Book</item>
+        <item>BibTeX Booklet</item>
+        <item>BibTeX Conference</item>
+        <item>BibTeX Inbook</item>
+        <item>BibTeX Incollection</item>
+        <item>BibTeX Inproceedings</item>
+        <item>BibTeX Manual</item>
+        <item>BibTeX Mastersthesis</item>
+        <item>BibTeX Misc</item>
+        <item>BibTeX Phdthesis</item>
+        <item>BibTeX Proceedings</item>
+        <item>BibTeX Techreport</item>
+        <item>BibTeX Unpublished</item>
     </string-array>
 
     <string-array name="risFormatsName">

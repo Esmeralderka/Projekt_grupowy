@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             logIn();
                         }else {
-                            Toast.makeText(MainActivity.this, "Something went wrong (>m<) \n " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Something went wrong \n " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -200,19 +200,19 @@ public class MainActivity extends AppCompatActivity {
                                                                 System.out.println("User document:" + document.getId());
                                                                 //Log.d(TAG, document.getId() + " => " + document.getData());
                                                             } catch (Exception error) {
-                                                                Toast.makeText(MainActivity.this, "Something went wrong (>m<) - wrong document map? \n ", Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(MainActivity.this, "Something went wrong \n ", Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
 
 
                                                         System.out.println(appUser.toString());
 
-                                                        Toast.makeText(MainActivity.this, "You successfully log in (OwO)", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(MainActivity.this, "You successfully log in", Toast.LENGTH_SHORT).show();
                                                         Intent intent = new Intent(getApplicationContext(), activity_documents.class);
                                                         startActivity(intent);
 
                                                     } else {
-                                                        Toast.makeText(MainActivity.this, "Something went wrong (>m<) - wrong documents \n ", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(MainActivity.this, "Something went wrong - wrong documents \n ", Toast.LENGTH_SHORT).show();
                                                     }
                                                 }
                                             });
@@ -220,13 +220,13 @@ public class MainActivity extends AppCompatActivity {
 
 
                                 } catch (NullPointerException error) {
-                                    Toast.makeText(MainActivity.this, "Something went wrong (>m<) - null document field \n ", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainActivity.this, "Something went wrong - null document field \n ", Toast.LENGTH_SHORT).show();
                                 }
                             } else {
-                                Toast.makeText(MainActivity.this, "Something went wrong (>m<) - no document \n ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "Something went wrong - no document \n ", Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Toast.makeText(MainActivity.this, "Something went wrong (>m<) \n ", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Something went wrong \n ", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -234,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(MainActivity.this, "Something went wrong (>m<) \n ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Something went wrong \n ", Toast.LENGTH_SHORT).show();
             }
         });
     }
