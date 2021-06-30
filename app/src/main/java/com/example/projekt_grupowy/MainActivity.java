@@ -244,4 +244,6 @@ public class MainActivity extends AppCompatActivity {
         FirebaseAuth mAuth;
         FirebaseAuth.getInstance().signOut();
     }
+
+    
 }

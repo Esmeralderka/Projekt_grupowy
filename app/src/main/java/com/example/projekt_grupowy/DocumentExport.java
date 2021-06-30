@@ -45,6 +45,7 @@ import com.example.projekt_grupowy.Formats.BibTeX_Unpublished;
 import com.example.projekt_grupowy.Formats.EndNote_Generic;
 import com.example.projekt_grupowy.Formats.Format;
 import com.example.projekt_grupowy.Formats.RIS_Generic;
+import com.example.projekt_grupowy.Models.Document;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -57,6 +58,7 @@ import java.util.HashMap;
 public class DocumentExport extends AppCompatActivity {
 
     public static int documentPositionInUserDocumentsArrayList;
+    public static Document document;
 
     public static String documentFormat;
     public static String RIS_format;
@@ -86,12 +88,12 @@ public class DocumentExport extends AppCompatActivity {
         RVExport = (RecyclerView) findViewById(R.id.RVExport);
 
         setFormat();
-        format.setDocumentName(MainActivity.appUser.getDocument(documentPositionInUserDocumentsArrayList).getName());
+        format.setDocumentName(document.getName());
 
         tv_docType.setText(format.getFileFormat() + " "+ format.getFileType());
-        tv_docName.setText(MainActivity.appUser.getDocument(documentPositionInUserDocumentsArrayList).getName());
+        tv_docName.setText(document.getName());
         if(tv_docName.getText().length() > 15){
-            String tempTitle = MainActivity.appUser.getDocument(documentPositionInUserDocumentsArrayList).getName().substring(0,15);
+            String tempTitle =document.getName().substring(0,15);
             tempTitle+="...";
             tv_docName.setText(tempTitle);
         }
@@ -156,7 +158,7 @@ public class DocumentExport extends AppCompatActivity {
     private void saveToFile(){
         FileOutputStream fos = null;
 
-        String fileName = MainActivity.appUser.getDocument(documentPositionInUserDocumentsArrayList).getName();
+        String fileName = document.getName();
         fileName += ".";
         fileName += format.getFileFormat();
 
@@ -206,7 +208,7 @@ public class DocumentExport extends AppCompatActivity {
             if (!dir.mkdirs()) { Log.d("Un Available:" , path.getAbsolutePath()); }
 
             //file name based on document name
-            String fileName = MainActivity.appUser.getDocument(documentPositionInUserDocumentsArrayList).getName();
+            String fileName = document.getName();
             fileName += ".";
             fileName += format.getFileFormat();
 
@@ -230,7 +232,7 @@ public class DocumentExport extends AppCompatActivity {
     }
 
     private void setRv(){
-        adapter = new DocumentExportAdapter(this,MainActivity.appUser.getDocuments().get(documentPositionInUserDocumentsArrayList), format);
+        adapter = new DocumentExportAdapter(this, document, format);
         RVExport.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         RVExport.setAdapter(adapter);
     }

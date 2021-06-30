@@ -86,6 +86,7 @@ public class DocumentsAdapter  extends RecyclerView.Adapter<DocumentsAdapter.Vie
                 @Override
                 public void onClick(View v) {
                     DocumentExportPick.documentPositionInUserDocumentsArrayList = _position;
+                    DocumentExportPick.document = documents.get(_position);
                     Intent intent =  new Intent(v.getContext(), DocumentExportPick.class);
                     v.getContext().startActivity(intent);
                 }

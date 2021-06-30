@@ -14,6 +14,8 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.projekt_grupowy.Models.Document;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -21,6 +23,7 @@ import java.util.Collections;
 public class DocumentExportPick extends AppCompatActivity {
 
     public static int documentPositionInUserDocumentsArrayList;
+    public static Document document;
 
     Button BExport;
     Spinner spinner;
@@ -34,9 +37,9 @@ public class DocumentExportPick extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_export_pick);
         tv_docName = (TextView) findViewById(R.id.tv_docName);
-        tv_docName.setText(MainActivity.appUser.getDocument(documentPositionInUserDocumentsArrayList).getName());
+        tv_docName.setText(document.getName());
         if(tv_docName.getText().length() > 15){
-            String tempTitle = MainActivity.appUser.getDocument(documentPositionInUserDocumentsArrayList).getName().substring(0,15);
+            String tempTitle =document.getName().substring(0,15);
             tempTitle+="...";
             tv_docName.setText(tempTitle);
         }
@@ -89,6 +92,7 @@ public class DocumentExportPick extends AppCompatActivity {
                 DocumentExport.exportTo = (String) radioButton.getText();
 
                 DocumentExport.documentPositionInUserDocumentsArrayList = documentPositionInUserDocumentsArrayList;
+                DocumentExport.document = document;
 
                 Intent intent = new Intent(getApplicationContext(), DocumentExport.class);
                 startActivity(intent);
